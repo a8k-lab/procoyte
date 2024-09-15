@@ -1,15 +1,13 @@
 name: 🌎 Build and Deploy
-# Will uncomment when ready
-# on:
-  # push:
-  #   branches:
-  #     - main
-    # paths-ignore:
-    #   - '.gitignore'
-    #   - 'README.md'
-    #   - 'biome.json'
-    #   - 'commitlint.config.ts'
-on: push # Will delete when ready
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.gitignore'
+      - 'README.md'
+      - 'biome.json'
+      - 'commitlint.config.ts'
 
 jobs:
   deploy:
