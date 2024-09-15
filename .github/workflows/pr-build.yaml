@@ -1,4 +1,4 @@
-name: 🏗️ Check if build succeeds before merging
+name: 🏗️ Build check for PR
 on:
   pull_request:
     branches:
@@ -10,7 +10,7 @@ on:
       - 'commitlint.config.ts'
 
 jobs:
-  build:
+  pr-build:
     runs-on: ubuntu-latest
     steps:
       - name: 🛎️ Checkout
