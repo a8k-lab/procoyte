@@ -27,14 +27,15 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
-      - name: 🔨 Install dependencies and build
+      - name: 🛠️ Setting up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+      - name: 🏗️ Install dependencies and build
         run: |
           pnpm install
-          pnpm build
+          pnpm run pages:build
       - name: 🌎 Deploy
         uses: cloudflare/wrangler-action@v3
         with:
