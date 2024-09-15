@@ -1,0 +1,42 @@
+name: 🌎 Build and Deploy
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.gitignore'
+      - 'README.md'
+      - 'biome.json'
+      - 'commitlint.config.ts'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    strategy:
+      matrix:
+        node-version: [20]
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v4
+      - name: 📦 Setting up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: 🛠️ Setting up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: 🏗️ Install dependencies and build
+        run: |
+          pnpm install
+          pnpm run pages:build
+      - name: 🌎 Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy
