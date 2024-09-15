@@ -1,0 +1,48 @@
+{
+  "name": "bytecott",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome lint .",
+    "pages:build": "pnpm next-on-pages",
+    "preview": "pnpm pages:build && wrangler pages dev",
+    "deploy": "pnpm pages:build && wrangler pages deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
+    "format": "biome format --write .",
+    "check": "biome check --write .",
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^5.5.2",
+    "next": "14.2.11",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.0",
+    "@cloudflare/next-on-pages": "^1.13.2",
+    "@cloudflare/workers-types": "^4.20240909.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5",
+    "vercel": "^37.4.2",
+    "wrangler": "^3.78.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": "biome check --write"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
