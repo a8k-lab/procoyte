@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["node_modules", "dist", "public", ".next", "env.d.ts"]
+    "ignore": ["node_modules", "dist", "public", ".next", ".vercel", "env.d.ts"]
   },
   "organizeImports": {
     "enabled": true
