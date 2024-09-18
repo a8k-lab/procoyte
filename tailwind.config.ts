@@ -7,10 +7,19 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      transparent: "transparent",
+      white: "#FFFFFF",
+      black: "#18181B",
+      primary: "#1A96F7",
+      secondary: "#24B78F",
+      error: "#EB5757",
+      warning: "#FFBB3E",
+    },
     extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+      fontFamily: {
+        poppins: ["var(--font-poppins)"],
+        inter: ["var(--font-inter)"],
       },
     },
   },
