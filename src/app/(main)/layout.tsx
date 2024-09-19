@@ -1,5 +1,6 @@
-import { Header } from "@/components/layout/header";
 import type { Metadata } from "next";
+
+import { Header } from "@/components/layout/header";
 
 export const metadata: Metadata = {
   title: "Procoyte | Cek Status Boikot Produk dengan Mudah",
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
     "Cek status boikot produk secara cepat dan mudah. Masukkan tautan atau nama produk untuk melihat apakah masuk daftar boikot terbaru. Dukung kampanye global dan temukan alternatif yang direkomendasikan.",
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <>
       <Header />
-      <main>{children}</main>
+      {children}
     </>
   );
 }
