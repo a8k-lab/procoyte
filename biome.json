@@ -18,6 +18,11 @@
       "recommended": true,
       "style": {
         "noNonNullAssertion": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "warn",
+        "noUnusedFunctionParameters": "warn",
+        "noUnusedImports": "warn"
       }
     }
   },
