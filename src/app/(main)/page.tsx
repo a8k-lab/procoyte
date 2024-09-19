@@ -3,11 +3,18 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
     <main className="flex flex-col items-center gap-6 text-center">
-      <div className="inline-flex items-center gap-1.5 py-2 px-4 font-poppins font-bold text-secondary rounded-full border border-secondary">
+      <div
+        className={cn(
+          "inline-flex items-center gap-1.5",
+          "py-2 px-4 rounded-full border border-secondary",
+          "font-poppins font-bold text-secondary text-xs",
+        )}
+      >
         <BadgeCheck />
         Trusted Boycott Checker
       </div>
