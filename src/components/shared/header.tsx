@@ -1,9 +1,15 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { BadgeCheck } from "lucide-react";
+import { AlignJustify, BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { navLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -38,17 +44,38 @@ export const Header = () => {
         </ul>
       </nav>
 
-      <SignedOut>
-        <SignInButton>
-          <Button>
-            <BadgeCheck width={16} height={16} />
-            Sign in
-          </Button>
-        </SignInButton>
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+      <div className="flex items-center gap-4">
+        <SignedOut>
+          <SignInButton>
+            <Button>
+              <BadgeCheck width={16} height={16} />
+              Login
+            </Button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger className="md:hidden">
+            <AlignJustify />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="md:hidden">
+            {navLinks.map(nav => (
+              <DropdownMenuItem key={nav.name}>
+                <Link
+                  href={nav.href}
+                  aria-label={nav.name}
+                  className="w-full py-1"
+                >
+                  {nav.name}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </header>
   );
 };
