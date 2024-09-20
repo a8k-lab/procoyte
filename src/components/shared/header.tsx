@@ -49,7 +49,7 @@ export const Header = () => {
           <SignInButton>
             <Button>
               <BadgeCheck width={16} height={16} />
-              Sign in
+              Login
             </Button>
           </SignInButton>
         </SignedOut>
