@@ -51,7 +51,7 @@ export default function RootLayout({
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#18181b" />
           <meta name="theme-color" content="#ffffff" />
         </head>
-        <body className="relative">
+        <body className="relative overflow-x-hidden">
           <BackgroundBlur />
 
           <main
