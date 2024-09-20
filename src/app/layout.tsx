@@ -2,6 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Poppins } from "next/font/google";
 
 import "./globals.css";
+import { BackgroundBlur } from "@/components/shared/background-blur";
 import { cn } from "@/lib/utils";
 
 export const runtime = "edge";
@@ -50,14 +51,18 @@ export default function RootLayout({
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#18181b" />
           <meta name="theme-color" content="#ffffff" />
         </head>
-        <body
-          className={cn(
-            "mt-[56px] mx-auto sm:mt-[72px]",
-            "py-12 px-4 md:py-[84px] xs:px-6 sm:px-10",
-            "w-full md:w-[560px] lg:w-[768px] xl:w-[672px]",
-          )}
-        >
-          {children}
+        <body className="relative">
+          <BackgroundBlur />
+
+          <main
+            className={cn(
+              "mt-[56px] mx-auto sm:mt-[72px]",
+              "py-12 px-4 md:py-[84px] xs:px-6 sm:px-10",
+              "relative w-full text-center md:w-[560px] lg:w-[768px] xl:w-[672px]",
+            )}
+          >
+            {children}
+          </main>
         </body>
       </html>
     </ClerkProvider>

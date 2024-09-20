@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center gap-6 text-center">
+    <>
       <div
         className={cn(
           "inline-flex items-center gap-1.5",
@@ -19,7 +19,7 @@ export default function Home() {
         Trusted Boycott Checker
       </div>
 
-      <section className="text-balance">
+      <section className="mt-6 text-balance">
         <h1 className="font-bold text-4xl lg:font-extrabold lg:text-5xl">
           Cek Status Boikot Produk dengan Mudah
         </h1>
@@ -31,7 +31,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="flex flex-col items-center justify-center gap-2.5 sm:flex-row">
+      <section className="mt-6 flex flex-col items-center justify-center gap-2.5 sm:flex-row">
         <div className="flex">
           <Image
             src="/images/avatar-1.webp"
@@ -60,7 +60,7 @@ export default function Home() {
         </h1>
       </section>
 
-      <section className="flex flex-col items-center justify-center gap-4 w-full sm:flex-row">
+      <section className="mt-6 flex flex-col items-center justify-center gap-4 w-full sm:flex-row md:mt-8">
         <Input
           placeholder="Masukkan nama, link, brand"
           className="w-full sm:w-[320px]"
@@ -82,6 +82,6 @@ export default function Home() {
           </Button>
         </div>
       </section>
-    </main>
+    </>
   );
 }
