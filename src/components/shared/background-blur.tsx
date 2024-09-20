@@ -15,7 +15,7 @@ export const BackgroundBlur = () => {
         alt="Background blur right"
         width={573}
         height={468}
-        className="absolute top-32 -right-32 md:top-0 md:right-0"
+        className="absolute top-32 right-0 md:top-0"
       />
     </>
   );
