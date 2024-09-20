@@ -1,6 +1,6 @@
 export const navLinks = [
-  { name: "Produk & Brand", href: "/" },
-  { name: "Berita", href: "/" },
-  { name: "FAQs", href: "/" },
-  { name: "Laporkan Produk", href: "/" },
+  { name: "Produk & Brand", href: "/explore" },
+  { name: "Berita", href: "/news" },
+  { name: "FAQs", href: "/faqs" },
+  { name: "Laporkan Produk", href: "/report" },
 ];
