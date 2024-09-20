@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/layout/header";
+import { Header } from "@/components/shared/header";
 
 export const metadata: Metadata = {
   title: "Procoyte | Cek Status Boikot Produk dengan Mudah",
