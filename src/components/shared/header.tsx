@@ -1,5 +1,5 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { BadgeCheck } from "lucide-react";
+import { AlignJustify, BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -38,17 +38,23 @@ export const Header = () => {
         </ul>
       </nav>
 
-      <SignedOut>
-        <SignInButton>
-          <Button>
-            <BadgeCheck width={16} height={16} />
-            Sign in
-          </Button>
-        </SignInButton>
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+      <div className="flex items-center gap-4">
+        <SignedOut>
+          <SignInButton>
+            <Button>
+              <BadgeCheck width={16} height={16} />
+              Sign in
+            </Button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+
+        <button type="button" className="block md:hidden">
+          <AlignJustify />
+        </button>
+      </div>
     </header>
   );
 };
