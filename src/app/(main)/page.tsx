@@ -20,10 +20,10 @@ export default function Home() {
       </div>
 
       <section className="text-balance">
-        <h1 className="font-bold lg:font-extrabold text-5xl">
+        <h1 className="font-bold text-4xl lg:font-extrabold lg:text-5xl">
           Cek Status Boikot Produk dengan Mudah
         </h1>
-        <p className="mt-4 text-muted-foreground">
+        <p className="mt-4 text-sm text-muted-foreground lg:text-base">
           Masukkan tautan atau nama produk untuk mengetahui apakah produk
           tersebut termasuk dalam daftar boikot terbaru. Temukan produk
           alternatif yang direkomendasikan dan ambil peran dalam mendukung
@@ -55,7 +55,7 @@ export default function Home() {
             className="-ml-3 rounded-full border-2 border-white"
           />
         </div>
-        <h1 className="font-semibold text-sm">
+        <h1 className="font-semibold text-sm text-balance">
           Bergabung dengan 289,124 pendukung yang lain
         </h1>
       </section>
