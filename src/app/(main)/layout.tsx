@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Header } from "@/components/shared/header";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Procoyte | Cek Status Boikot Produk dengan Mudah",
@@ -16,7 +17,15 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      {children}
+      <main
+        className={cn(
+          "mt-[56px] mx-auto sm:mt-[72px]",
+          "py-12 px-4 md:py-[84px] xs:px-6 sm:px-10",
+          "relative w-full text-center md:w-[560px] lg:w-[768px] xl:w-[672px]",
+        )}
+      >
+        {children}
+      </main>
     </>
   );
 }
