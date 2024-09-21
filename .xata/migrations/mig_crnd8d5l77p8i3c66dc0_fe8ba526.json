@@ -1,0 +1,16 @@
+{
+  "id": "mig_crnd8d5l77p8i3c66dc0",
+  "parentID": "mig_crnd7hch0j9h4490s4ig",
+  "checksum": "1:fe8ba526bc06a2df398b437d3f6e1c6be1f443074e413b022b0eef93181fa56f",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "marked",
+          "type": "bool"
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

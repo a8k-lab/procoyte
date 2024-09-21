@@ -1,0 +1,12 @@
+{
+  "id": "mig_crndv9dl77p8i3c66dh0",
+  "parentID": "mig_crndr2dl77p8i3c66dg0",
+  "checksum": "1:5fb03574993c08fa3d0e0f563ce961191dfa254171f838583a860988236f7a40",
+  "operations": [
+    {
+      "removeTable": {
+        "table": "brands"
+      }
+    }
+  ]
+}

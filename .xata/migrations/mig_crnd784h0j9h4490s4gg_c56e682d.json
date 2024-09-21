@@ -1,0 +1,11 @@
+{
+  "id": "mig_crnd784h0j9h4490s4gg",
+  "checksum": "1:c56e682d7fe66b1f2598a402ff2d9aa5ddc1764cc6c18dba00471438c7a1b608",
+  "operations": [
+    {
+      "addTable": {
+        "table": "brands"
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "mig_crne035l77p8i3c66djg",
+  "parentID": "mig_crndv9dl77p8i3c66dh0",
+  "checksum": "1:683423bd247df39be804aa89eceb6978ffb2568ed9637bd9ccb50b7040223da8",
+  "operations": [
+    {
+      "addTable": {
+        "table": "brands"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "string"
+        },
+        "table": "brands"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "tag",
+          "type": "string"
+        },
+        "table": "brands"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "price",
+          "type": "int"
+        },
+        "table": "brands"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "marked",
+          "type": "int"
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}
