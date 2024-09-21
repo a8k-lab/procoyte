@@ -72,7 +72,7 @@ export default function Home() {
             <BadgeCheck width={16} height={16} /> Cari
           </Button>
 
-          <TextSeparator>atau</TextSeparator>
+          <TextSeparator className="sm:hidden">atau</TextSeparator>
 
           <Button variant="outline">
             <BadgeCheck width={16} height={16} /> Scan QR
