@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Header } from "@/components/shared/header";
+import { MainHeader } from "@/components/layout/main-header";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <Header />
+      <MainHeader />
       <main
         className={cn(
           "mt-[56px] mx-auto sm:mt-[72px]",
