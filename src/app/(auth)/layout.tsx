@@ -1,14 +1,18 @@
-import { AuthHeader } from "@/components/shared/auth-header";
+import { AuthFooter } from "@/components/layout/auth-footer";
+import { AuthHeader } from "@/components/layout/auth-header";
 
 export const runtime = "edge";
 
-const SignInLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <AuthHeader />
-      <main className="relative my-2.5 flex justify-center">{children}</main>
+      <main className="relative bg-background flex justify-center sm:bg-transparent sm:my-2.5">
+        {children}
+      </main>
+      <AuthFooter />
     </>
   );
 };
 
-export default SignInLayout;
+export default AuthLayout;
