@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const AuthHeader = () => {
   return (
-    <header className="flex items-center py-[22px] md:justify-center">
+    <header className="flex items-center py-[22px] px-4 sm:justify-center">
       <Link href="/" className="flex items-center gap-3 py-2">
         <Image
           src="/images/logo.svg"
