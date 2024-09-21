@@ -100,7 +100,10 @@ export default function SignUpPage() {
                       </p>
                     </div>
 
-                    <Clerk.Field name="code" className="space-y-2">
+                    <Clerk.Field
+                      name="code"
+                      className="space-y-2 overflow-x-hidden"
+                    >
                       <Clerk.Label className="sr-only">
                         Email address
                       </Clerk.Label>
@@ -113,7 +116,7 @@ export default function SignUpPage() {
                             <div
                               data-status={status}
                               className={cn(
-                                "relative flex size-14 items-center justify-center",
+                                "relative flex size-12 items-center justify-center sm:size-14",
                                 "border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
                                 {
                                   "z-10 ring-2 ring-ring ring-offset-background":
