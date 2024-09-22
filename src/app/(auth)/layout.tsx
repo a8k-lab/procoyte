@@ -1,13 +1,25 @@
-import type React from "react";
+import { AuthFooter } from "@/components/layout/auth-footer";
+import { AuthHeader } from "@/components/layout/auth-header";
+import { cn } from "@/lib/utils";
 
 export const runtime = "edge";
 
-const SignInLayout = ({ children }: { children: React.ReactNode }) => {
+const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      {children}
-    </div>
+    <>
+      <AuthHeader />
+      <main
+        className={cn(
+          // 154px = AuthHeader height + AuthFooter height (84px + 70px)
+          "min-h-[calc(100vh-154px)] flex items-center justify-center",
+          "relative bg-background sm:bg-transparent sm:py-2.5",
+        )}
+      >
+        {children}
+      </main>
+      <AuthFooter />
+    </>
   );
 };
 
-export default SignInLayout;
+export default AuthLayout;
