@@ -1,0 +1,13 @@
+{
+  "id": "mig_crne3f4h0j9h4490s590",
+  "parentID": "mig_crne3akh0j9h4490s580",
+  "checksum": "1:2ec7810465a1a2770e34dea0694a18174a2d6181c248a67640e0fefa25881c63",
+  "operations": [
+    {
+      "renameTable": {
+        "newName": "brands",
+        "oldName": "human_readable_brand_database"
+      }
+    }
+  ]
+}

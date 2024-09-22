@@ -1,0 +1,16 @@
+{
+  "id": "mig_crnd8mch0j9h4490s4jg",
+  "parentID": "mig_crnd8jtl77p8i3c66ddg",
+  "checksum": "1:1e7581706c8d256c3b29780729b8b864f38b6777a2cbd0581f9eea546036ef1a",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "text"
+        },
+        "table": "tags"
+      }
+    }
+  ]
+}

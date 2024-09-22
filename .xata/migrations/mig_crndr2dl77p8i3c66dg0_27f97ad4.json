@@ -1,0 +1,16 @@
+{
+  "id": "mig_crndr2dl77p8i3c66dg0",
+  "parentID": "mig_crnd8mch0j9h4490s4jg",
+  "checksum": "1:27f97ad462e265e2312b8314de25bd4b699fcbeb706c1bdf8c7b5146edb308f2",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "imageUrl",
+          "type": "text"
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

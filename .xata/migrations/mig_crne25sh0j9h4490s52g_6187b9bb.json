@@ -1,0 +1,57 @@
+{
+  "id": "mig_crne25sh0j9h4490s52g",
+  "parentID": "mig_crne0c4h0j9h4490s510",
+  "checksum": "1:6187b9bbd58bb838d6b49e0d651af9b787b3799ee236129ddae10ba6406b95cf",
+  "operations": [
+    {
+      "addTable": {
+        "table": "human_readable_brand_database"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "id_old",
+          "type": "string"
+        },
+        "table": "human_readable_brand_database"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "string"
+        },
+        "table": "human_readable_brand_database"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "tag",
+          "type": "string"
+        },
+        "table": "human_readable_brand_database"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "price",
+          "type": "int"
+        },
+        "table": "human_readable_brand_database"
+      }
+    },
+    {
+      "addColumn": {
+        "column": {
+          "name": "marked",
+          "type": "int"
+        },
+        "table": "human_readable_brand_database"
+      }
+    }
+  ]
+}

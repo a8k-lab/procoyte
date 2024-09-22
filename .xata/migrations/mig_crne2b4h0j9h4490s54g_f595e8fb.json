@@ -1,0 +1,16 @@
+{
+  "id": "mig_crne2b4h0j9h4490s54g",
+  "parentID": "mig_crne294h0j9h4490s53g",
+  "checksum": "1:f595e8fbad7adbde350ef02f948344d8b10bea66ecb818716aec09138d8206f9",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "imageUrl",
+          "type": "text"
+        },
+        "table": "human_readable_brand_database"
+      }
+    }
+  ]
+}
