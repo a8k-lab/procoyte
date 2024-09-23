@@ -1,0 +1,17 @@
+{
+  "id": "mig_cropi9r9id6jt70q0u00",
+  "parentID": "mig_cropi2b9id6jt70q0tv0",
+  "checksum": "1:9f7d3d864f1f9637ac7e964f35e374d9f412ab85acfd537e4eb79e7f43ede622",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "location_id",
+          "type": "text",
+          "defaultValue": ""
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

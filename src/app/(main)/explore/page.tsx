@@ -47,7 +47,7 @@ const BrandsSearch = async () => {
 
 const BrandNotRegistered = () => {
   return (
-    <section className="p-4 block mt-6 border border-border rounded-md text-center">
+    <section className="p-4 block mt-6 border border-border rounded-md text-center bg-white">
       <h2 className="text-lg font-semibold text-text-primary">
         Produk tidak terdaftar?
       </h2>

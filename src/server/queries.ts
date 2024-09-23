@@ -25,9 +25,14 @@ export async function getBrands({
 }
 
 export async function getBrand({ id }: { id: string }) {
-  const brand = await db.brands.getFirstOrThrow({
+  const brand = await db.brands.read(id, ["*", "location.*"]);
+  return brand;
+}
+
+export async function getBrandMarkSources({ id }: { id: string }) {
+  const brand = await db.mark_sources.getMany({
     filter: {
-      id,
+      "brand.id": id,
     },
   });
   return brand;

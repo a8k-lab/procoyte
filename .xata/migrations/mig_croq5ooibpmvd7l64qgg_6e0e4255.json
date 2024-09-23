@@ -1,0 +1,13 @@
+{
+  "id": "mig_croq5ooibpmvd7l64qgg",
+  "parentID": "mig_cropkjrns7pucvip389g",
+  "checksum": "1:6e0e4255df0e984f89aff50fd9468e73caa5a349d33a59865f36f7657ff46cdf",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "brand_id",
+        "table": "mark_sources"
+      }
+    }
+  ]
+}

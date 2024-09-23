@@ -16,7 +16,11 @@ const tables = [
       { name: "price", type: "int" },
       { name: "marked", type: "int" },
       { name: "imageUrl", type: "text" },
+      { name: "owned_by_id", type: "text" },
+      { name: "mark_reason", type: "text" },
+      { name: "location", type: "link", link: { table: "locations" } },
     ],
+    revLinks: [{ column: "brand", table: "mark_sources" }],
   },
   {
     name: "brands_tags",
@@ -24,6 +28,19 @@ const tables = [
       { name: "tag_id", type: "text" },
       { name: "brand_id", type: "text" },
     ],
+  },
+  {
+    name: "mark_sources",
+    columns: [
+      { name: "name", type: "text" },
+      { name: "url", type: "text" },
+      { name: "brand", type: "link", link: { table: "brands" } },
+    ],
+  },
+  {
+    name: "locations",
+    columns: [{ name: "name", type: "text", notNull: true, defaultValue: "" }],
+    revLinks: [{ column: "location", table: "brands" }],
   },
 ] as const;
 
@@ -39,10 +56,18 @@ export type BrandsRecord = Brands & XataRecord;
 export type BrandsTags = InferredTypes["brands_tags"];
 export type BrandsTagsRecord = BrandsTags & XataRecord;
 
+export type MarkSources = InferredTypes["mark_sources"];
+export type MarkSourcesRecord = MarkSources & XataRecord;
+
+export type Locations = InferredTypes["locations"];
+export type LocationsRecord = Locations & XataRecord;
+
 export type DatabaseSchema = {
   tags: TagsRecord;
   brands: BrandsRecord;
   brands_tags: BrandsTagsRecord;
+  mark_sources: MarkSourcesRecord;
+  locations: LocationsRecord;
 };
 
 const DatabaseClient = buildClient();

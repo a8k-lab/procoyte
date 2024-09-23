@@ -1,0 +1,16 @@
+{
+  "id": "mig_crooqovc09b2hi9gjsm0",
+  "parentID": "mig_crooqg7c09b2hi9gjsl0",
+  "checksum": "1:6eb99acdf7eeed23179ac2e6fe52f3755b731059d00f66597321d0f47fcee3dd",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "owned_by_id",
+          "type": "text"
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mig_crophu3ns7pucvip386g",
+  "parentID": "mig_crophrgibpmvd7l64qa0",
+  "checksum": "1:0bfa7b52a28a81a9bc94c7a5fee89f3015572410c3cd817f8e5ee7e1f05d557b",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "name",
+        "table": "locations"
+      }
+    }
+  ]
+}

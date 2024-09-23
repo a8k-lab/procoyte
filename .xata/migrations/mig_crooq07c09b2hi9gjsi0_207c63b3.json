@@ -1,0 +1,12 @@
+{
+  "id": "mig_crooq07c09b2hi9gjsi0",
+  "parentID": "mig_crne3f4h0j9h4490s590",
+  "checksum": "1:207c63b3b9b43fc17b1253970ec8aa1ab3892692fd2cc641cf0ea632cb1e7c5f",
+  "operations": [
+    {
+      "addTable": {
+        "table": "mark_sources"
+      }
+    }
+  ]
+}

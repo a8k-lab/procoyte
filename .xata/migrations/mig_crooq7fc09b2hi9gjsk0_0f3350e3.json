@@ -1,0 +1,16 @@
+{
+  "id": "mig_crooq7fc09b2hi9gjsk0",
+  "parentID": "mig_crooq5fc09b2hi9gjsj0",
+  "checksum": "1:0f3350e3d1136579125f9475a4b3cdfdce1ed1907a3c4feedd925fa2a1e09dcf",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "url",
+          "type": "text"
+        },
+        "table": "mark_sources"
+      }
+    }
+  ]
+}

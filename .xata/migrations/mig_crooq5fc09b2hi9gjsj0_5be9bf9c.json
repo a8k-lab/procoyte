@@ -1,0 +1,16 @@
+{
+  "id": "mig_crooq5fc09b2hi9gjsj0",
+  "parentID": "mig_crooq07c09b2hi9gjsi0",
+  "checksum": "1:5be9bf9c2fd130a84f1b6eb6f87950f7de455faaba9c9454057863fb66060502",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "text"
+        },
+        "table": "mark_sources"
+      }
+    }
+  ]
+}

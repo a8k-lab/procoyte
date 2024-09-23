@@ -1,0 +1,19 @@
+{
+  "id": "mig_cropkjrns7pucvip389g",
+  "parentID": "mig_cropke3ns7pucvip388g",
+  "checksum": "1:294db150464a2246c6d8a71b90047a22a4e67b8cf65ca515e2e843cf3966490f",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "location",
+          "type": "link",
+          "link": {
+            "table": "locations"
+          }
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

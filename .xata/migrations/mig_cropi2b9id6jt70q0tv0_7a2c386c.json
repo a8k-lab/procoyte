@@ -1,0 +1,18 @@
+{
+  "id": "mig_cropi2b9id6jt70q0tv0",
+  "parentID": "mig_crophu3ns7pucvip386g",
+  "checksum": "1:7a2c386cf0ae097f55494469073d12a9a9df83edec9becafa6a8d43725be688e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "text",
+          "notNull": true,
+          "defaultValue": ""
+        },
+        "table": "locations"
+      }
+    }
+  ]
+}

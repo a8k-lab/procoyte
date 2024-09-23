@@ -10,7 +10,7 @@ const BrandCard = ({
   imageUrl?: string | null;
 }) => {
   return (
-    <div className="border rounded-md border-border p-4 text-left">
+    <div className="border rounded-md border-border p-4 text-left bg-white h-full">
       <Image
         src={imageUrl ?? "/images/logo.svg"}
         alt={name ?? ""}
