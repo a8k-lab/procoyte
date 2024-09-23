@@ -3,7 +3,6 @@ import { Inter, Poppins } from "next/font/google";
 
 import "./globals.css";
 import { BackgroundBlur } from "@/components/shared/background-blur";
-import { cn } from "@/lib/utils";
 
 export const runtime = "edge";
 
@@ -53,15 +52,8 @@ export default function RootLayout({
         </head>
         <body className="relative bg-[#F4F4F5]">
           <BackgroundBlur />
-          <main
-            className={cn(
-              "mt-[56px] mx-auto sm:mt-[72px]",
-              "py-12 px-4 md:py-[84px] xs:px-6 sm:px-10",
-              "relative w-full text-center md:w-[560px] lg:w-[768px] xl:w-[672px] ",
-            )}
-          >
-            {children}
-          </main>
+
+          {children}
         </body>
       </html>
     </ClerkProvider>

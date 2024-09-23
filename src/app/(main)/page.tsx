@@ -1,6 +1,7 @@
 import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 
+import { TextSeparator } from "@/components/shared/text-separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -71,11 +72,7 @@ export default function Home() {
             <BadgeCheck width={16} height={16} /> Cari
           </Button>
 
-          <div className="flex items-center gap-2.5 sm:hidden">
-            <div className="flex-grow border-t border" />
-            <p className="text-xs text-muted-foreground">atau</p>
-            <div className="flex-grow border-t border" />
-          </div>
+          <TextSeparator className="sm:hidden">atau</TextSeparator>
 
           <Button variant="outline">
             <BadgeCheck width={16} height={16} /> Scan QR

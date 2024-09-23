@@ -13,7 +13,7 @@ import {
 import { navLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-export const Header = () => {
+export const MainHeader = () => {
   return (
     <header
       className={cn(
