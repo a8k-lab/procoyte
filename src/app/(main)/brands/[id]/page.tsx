@@ -1,9 +1,9 @@
 import { getBrand, getBrandMarkSources } from "@/server/queries";
 import { Icon } from "@iconify/react";
-import { cx } from "class-variance-authority";
 import sanitizeHtml from "sanitize-html";
 import Image from "next/image";
 import RouterButton from "@/components/shared/router-button";
+import { cn } from "@/lib/utils";
 
 export default async function BrandPage({
   params: { id },
@@ -47,7 +47,7 @@ async function Content({
     : [];
   return (
     <div
-      className={cx(
+      className={cn(
         brand?.marked ? "border-error" : "border-secondary",
         "border rounded-md border-border p-4 text-left bg-white",
       )}

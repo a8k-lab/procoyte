@@ -19,7 +19,7 @@ export const MainHeader = () => {
       className={cn(
         "bg-background fixed top-0 inset-x-0 z-10",
         "flex items-center justify-between gap-4 border-b border-muted",
-        "py-2 sm:py-4 px-4 xs:px-6 sm:px-10 md:px-14 lg:px-16 xl:px-20",
+        "py-2 sm:py-4 px-4 xs:px-6 sm:px-10 md:px-14 lg:px-16 xl:px-20 ",
       )}
     >
       <nav className="flex items-center gap-8">
