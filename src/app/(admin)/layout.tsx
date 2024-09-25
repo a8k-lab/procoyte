@@ -1,4 +1,4 @@
-import { MainHeader } from "@/components/layout/main-header";
+import { AdminHeader } from "@/components/layout/admin-header";
 import { cn } from "@/lib/utils";
 import { Protect } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
@@ -11,7 +11,7 @@ export default function AdminLayout({
   const { orgId } = auth();
   return (
     <>
-      <MainHeader showOrganizationSwitcher />
+      <AdminHeader />
       <main
         className={cn(
           "mt-[56px] mx-auto sm:mt-[72px]",

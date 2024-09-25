@@ -4,3 +4,5 @@ export const navLinks = [
   { name: "FAQs", href: "/faqs" },
   { name: "Laporkan Produk", href: "/report" },
 ];
+
+export const adminNavLinks = [{ name: "Dashboard", href: "/admin" }];
