@@ -1,5 +1,5 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { BadgeCheck } from "lucide-react";
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -42,7 +42,7 @@ export const MainHeader = () => {
         <SignedOut>
           <SignInButton>
             <Button>
-              <BadgeCheck width={16} height={16} />
+              <Icon icon="lucide:badge-check" className="size-4" />
               Login
             </Button>
           </SignInButton>

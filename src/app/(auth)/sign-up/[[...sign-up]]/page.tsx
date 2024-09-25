@@ -2,7 +2,7 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignUp from "@clerk/elements/sign-up";
-import { BadgeCheck } from "lucide-react";
+import { Icon } from "@iconify/react";
 import Link from "next/link";
 
 import { FormField } from "@/components/shared/form-field";
@@ -76,7 +76,7 @@ export default function SignUpPage() {
                       className="w-full"
                       disabled={isGlobalLoading}
                     >
-                      <BadgeCheck width={16} height={16} />
+                      <Icon icon="lucide:badge-check" className="size-4" />
                       <Clerk.Loading scope="provider:google">
                         {isLoading =>
                           isLoading ? "Loading..." : "Register with Google"
