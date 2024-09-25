@@ -1,4 +1,10 @@
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  OrganizationSwitcher,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 import { AlignJustify, BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +19,11 @@ import {
 import { navLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-export const MainHeader = () => {
+export const MainHeader = ({
+  showOrganizationSwitcher,
+}: {
+  showOrganizationSwitcher?: boolean;
+}) => {
   return (
     <header
       className={cn(
@@ -54,6 +64,10 @@ export const MainHeader = () => {
           </SignInButton>
         </SignedOut>
         <SignedIn>
+          {showOrganizationSwitcher ? (
+            <OrganizationSwitcher hidePersonal />
+          ) : null}
+
           <UserButton />
         </SignedIn>
 
