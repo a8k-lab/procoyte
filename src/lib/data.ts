@@ -14,5 +14,5 @@ export const bottomNavLinks = [
     icon: "material-symbols-light:news-outline",
   },
   { name: "Store", href: "/store", icon: "la:store" },
-  { name: "FAQs", href: "/faqs", icon: "" },
+  { name: "FAQs", href: "/faqs", icon: "la:question-circle" },
 ];
