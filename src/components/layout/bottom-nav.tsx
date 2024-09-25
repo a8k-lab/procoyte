@@ -24,7 +24,7 @@ export const BottomNav = () => {
               href={nav.href}
               aria-label={nav.name}
               className={cn(
-                "flex flex-col items-center justify-center text-xs text-center",
+                "flex flex-col items-center justify-center gap-1 text-xs text-center",
                 pathname === nav.href
                   ? "text-primary"
                   : "text-muted-foreground",
