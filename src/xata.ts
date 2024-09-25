@@ -7,7 +7,11 @@ import type {
 } from "@xata.io/client";
 
 const tables = [
-  { name: "tags", columns: [{ name: "name", type: "text" }] },
+  {
+    name: "tags",
+    columns: [{ name: "name", type: "text" }],
+    revLinks: [{ column: "tag", table: "brands_tags" }],
+  },
   {
     name: "brands",
     columns: [
@@ -20,13 +24,16 @@ const tables = [
       { name: "mark_reason", type: "text" },
       { name: "location", type: "link", link: { table: "locations" } },
     ],
-    revLinks: [{ column: "brand", table: "mark_sources" }],
+    revLinks: [
+      { column: "brand", table: "mark_sources" },
+      { column: "brand", table: "brands_tags" },
+    ],
   },
   {
     name: "brands_tags",
     columns: [
-      { name: "tag_id", type: "text" },
-      { name: "brand_id", type: "text" },
+      { name: "tag", type: "link", link: { table: "tags" } },
+      { name: "brand", type: "link", link: { table: "brands" } },
     ],
   },
   {

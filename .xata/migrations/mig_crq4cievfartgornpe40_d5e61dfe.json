@@ -1,0 +1,13 @@
+{
+  "id": "mig_crq4cievfartgornpe40",
+  "parentID": "mig_crq4cgtdnoa91160bu30",
+  "checksum": "1:d5e61dfea2b720f008a6789858b6f2c776f1e1775b6193546ff3cb13dd3bd5d9",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "brand",
+        "table": "brands_tags"
+      }
+    }
+  ]
+}

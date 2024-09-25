@@ -5,6 +5,8 @@ export const headerLinks = [
   { name: "Laporkan Produk", href: "/report" },
 ];
 
+export const adminNavLinks = [{ name: "Dashboard", href: "/admin" }];
+
 export const bottomNavLinks = [
   { name: "Home", href: "/", icon: "material-symbols-light:home-outline" },
   { name: "List Boikot", href: "/explore", icon: "solar:list-linear" },

@@ -37,3 +37,34 @@ export async function getBrandMarkSources({ id }: { id: string }) {
   });
   return brand;
 }
+
+export async function postTag({ name }: { name: string }) {
+  const tag = await db.tags.create({
+    name,
+  });
+  return tag;
+}
+
+export async function getTagByName({ name }: { name: string }) {
+  const tag = await db.tags.getFirstOrThrow({
+    filter: {
+      name,
+    },
+  });
+  return tag;
+}
+
+export async function postBrandTag({
+  brandId,
+  tagId,
+}: { brandId: string; tagId: string }) {
+  const brandTag = await db.brands_tags.create({
+    brand: {
+      id: brandId,
+    },
+    tag: {
+      id: tagId,
+    },
+  });
+  return brandTag;
+}
