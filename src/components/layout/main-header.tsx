@@ -1,15 +1,9 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { AlignJustify, BadgeCheck } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { headerLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -56,25 +50,6 @@ export const MainHeader = () => {
         <SignedIn>
           <UserButton />
         </SignedIn>
-
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="md:hidden">
-            <AlignJustify />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="md:hidden">
-            {headerLinks.map(nav => (
-              <DropdownMenuItem key={nav.name}>
-                <Link
-                  href={nav.href}
-                  aria-label={nav.name}
-                  className="w-full py-1"
-                >
-                  {nav.name}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </header>
   );
