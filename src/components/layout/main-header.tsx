@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { navLinks } from "@/lib/data";
+import { headerLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const MainHeader = () => {
@@ -34,7 +34,7 @@ export const MainHeader = () => {
         </Link>
 
         <ul className="hidden gap-5 text-sm md:flex lg:gap-8">
-          {navLinks.map(nav => (
+          {headerLinks.map(nav => (
             <li key={nav.name}>
               <Link href={nav.href} aria-label={nav.name}>
                 {nav.name}
@@ -62,7 +62,7 @@ export const MainHeader = () => {
             <AlignJustify />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="md:hidden">
-            {navLinks.map(nav => (
+            {headerLinks.map(nav => (
               <DropdownMenuItem key={nav.name}>
                 <Link
                   href={nav.href}

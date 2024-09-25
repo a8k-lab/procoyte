@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { BottomNav } from "@/components/layout/bottom-nav";
 import { MainHeader } from "@/components/layout/main-header";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,7 @@ export default function MainLayout({
       >
         {children}
       </main>
+      <BottomNav />
     </>
   );
 }
