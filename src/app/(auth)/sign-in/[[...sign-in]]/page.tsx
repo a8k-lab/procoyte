@@ -34,7 +34,16 @@ export default function Page() {
                   </div>
 
                   <FormField name="identifier" label="Email" type="email" />
-                  <FormField name="password" label="Password" type="password" />
+                  <FormField
+                    name="password"
+                    label="Password"
+                    type="password"
+                    suffixLabel={
+                      <Link href="/forgot-password" className="underline">
+                        Forgot your password?
+                      </Link>
+                    }
+                  />
                   <div className="mt-2 mb-4 flex items-center space-x-2">
                     <Checkbox id="rememberMe" />
                     <Label

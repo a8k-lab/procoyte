@@ -7,14 +7,23 @@ import { Label } from "@/components/ui/label";
 type FormFieldProps = {
   name: string;
   label: string;
+  suffixLabel?: React.ReactNode;
   type?: HTMLInputTypeAttribute;
 };
 
-export const FormField = ({ name, label, type = "text" }: FormFieldProps) => {
+export const FormField = ({
+  name,
+  label,
+  suffixLabel,
+  type = "text",
+}: FormFieldProps) => {
   return (
     <Clerk.Field name={name} className="space-y-2">
       <Clerk.Label asChild>
-        <Label className="text-base">{label}</Label>
+        <div className="flex items-center justify-between">
+          <Label className="text-base">{label}</Label>
+          {Boolean(suffixLabel) && suffixLabel}
+        </div>
       </Clerk.Label>
       <Clerk.Input type={type} required asChild>
         <Input placeholder={`Masukkan ${label}`} />
