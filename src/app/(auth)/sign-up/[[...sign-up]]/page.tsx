@@ -47,7 +47,7 @@ export default function SignUpPage() {
                       Terms & Conditions
                     </Label>
                     <div className="mt-2 flex items-center space-x-2">
-                      <Checkbox id="terms" />
+                      <Checkbox id="terms" required />
                       <Label
                         htmlFor="terms"
                         className="text-sm text-muted-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
