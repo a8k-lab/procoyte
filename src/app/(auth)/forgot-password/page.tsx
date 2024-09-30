@@ -16,6 +16,7 @@ export default function ForgotPasswordPage() {
   const [successfulCreation, setSuccessfulCreation] = useState(false);
   const [secondFactor, setSecondFactor] = useState(false);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const { isSignedIn } = useAuth();
@@ -31,6 +32,7 @@ export default function ForgotPasswordPage() {
 
   async function create(e: React.FormEvent) {
     e.preventDefault();
+    setIsLoading(true);
     await signIn
       ?.create({
         strategy: "reset_password_email_code",
@@ -43,11 +45,15 @@ export default function ForgotPasswordPage() {
       .catch(err => {
         console.error("error", err.errors[0].longMessage);
         setError(err.errors[0].longMessage);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   async function reset(e: React.FormEvent) {
     e.preventDefault();
+    setIsLoading(true);
     await signIn
       ?.attemptFirstFactor({
         strategy: "reset_password_email_code",
@@ -68,6 +74,9 @@ export default function ForgotPasswordPage() {
       .catch(err => {
         console.error("error", err.errors[0].longMessage);
         setError(err.errors[0].longMessage);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -82,18 +91,23 @@ export default function ForgotPasswordPage() {
           onSubmit={!successfulCreation ? create : reset}
         >
           {!successfulCreation && (
-            <div className="space-y-2">
-              <Label htmlFor="email">Masukkan alamat email Anda</Label>
-              <Input
-                type="email"
-                placeholder="e.g john@doe.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-              <Button type="submit">Kirim kode reset password</Button>
+            <>
+              <div className="space-y-2">
+                <Label htmlFor="email">Masukkan alamat email Anda</Label>
+                <Input
+                  type="email"
+                  placeholder="e.g john@doe.com"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Loading..." : "Kirim kode reset password"}
+              </Button>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-            </div>
+            </>
           )}
 
           {successfulCreation && (
@@ -121,7 +135,9 @@ export default function ForgotPasswordPage() {
                 />
               </div>
 
-              <Button type="submit">Reset</Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? "Loading..." : "Reset"}
+              </Button>
               {error && <p className="text-red-500 text-sm">{error}</p>}
             </>
           )}
