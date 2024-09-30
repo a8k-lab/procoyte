@@ -7,7 +7,15 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["node_modules", "dist", "public", ".next", ".vercel", "env.d.ts"]
+    "ignore": [
+      "node_modules",
+      "dist",
+      "public",
+      ".next",
+      ".vercel",
+      "env.d.ts",
+      ".xata"
+    ]
   },
   "organizeImports": {
     "enabled": true
