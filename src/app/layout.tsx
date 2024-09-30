@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Poppins } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 
 import "./globals.css";
 import { BackgroundBlur } from "@/components/shared/background-blur";
@@ -51,6 +52,7 @@ export default function RootLayout({
           <meta name="theme-color" content="#ffffff" />
         </head>
         <body className="relative bg-[#F4F4F5]">
+          <NextTopLoader color="#1A96F7" height={4} />
           <BackgroundBlur />
 
           {children}
