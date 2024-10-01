@@ -2,10 +2,10 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
-import { BadgeCheck } from "lucide-react";
+import { Icon } from "@iconify/react";
 import Link from "next/link";
 
-import { FormField } from "@/components/shared/form-field";
+import { ClerkField } from "@/components/shared/form-field";
 import { TextSeparator } from "@/components/shared/text-separator";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -33,8 +33,17 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <FormField name="identifier" label="Email" type="email" />
-                  <FormField name="password" label="Password" type="password" />
+                  <ClerkField name="identifier" label="Email" type="email" />
+                  <ClerkField
+                    name="password"
+                    label="Password"
+                    type="password"
+                    suffixLabel={
+                      <Link href="/forgot-password" className="underline">
+                        Forgot your password?
+                      </Link>
+                    }
+                  />
                   <div className="mt-2 mb-4 flex items-center space-x-2">
                     <Checkbox id="rememberMe" />
                     <Label
@@ -63,7 +72,7 @@ export default function Page() {
                       className="w-full"
                       disabled={isGlobalLoading}
                     >
-                      <BadgeCheck width={16} height={16} />
+                      <Icon icon="lucide:badge-check" className="size-4" />
                       <Clerk.Loading scope="provider:google">
                         {isLoading =>
                           isLoading ? "Loading..." : "Login with Google"

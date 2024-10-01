@@ -1,4 +1,4 @@
-import { BadgeCheck } from "lucide-react";
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 
 import { TextSeparator } from "@/components/shared/text-separator";
@@ -16,7 +16,7 @@ export default function Home() {
           "font-poppins font-bold text-secondary text-xs",
         )}
       >
-        <BadgeCheck />
+        <Icon icon="lucide:badge-check" className="size-6" />
         Trusted Boycott Checker
       </div>
 
@@ -69,13 +69,13 @@ export default function Home() {
 
         <div className="flex flex-col items-stretch justify-stretch gap-2 w-full sm:flex-row sm:w-auto">
           <Button>
-            <BadgeCheck width={16} height={16} /> Cari
+            <Icon icon="lucide:badge-check" className="size-4" /> Cari
           </Button>
 
           <TextSeparator className="sm:hidden">atau</TextSeparator>
 
           <Button variant="outline">
-            <BadgeCheck width={16} height={16} /> Scan QR
+            <Icon icon="lucide:badge-check" className="size-4" /> Scan QR
           </Button>
         </div>
       </section>

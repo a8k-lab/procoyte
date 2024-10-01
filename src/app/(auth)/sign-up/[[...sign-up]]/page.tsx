@@ -2,10 +2,10 @@
 
 import * as Clerk from "@clerk/elements/common";
 import * as SignUp from "@clerk/elements/sign-up";
-import { BadgeCheck } from "lucide-react";
+import { Icon } from "@iconify/react";
 import Link from "next/link";
 
-import { FormField } from "@/components/shared/form-field";
+import { ClerkField } from "@/components/shared/form-field";
 import { TextSeparator } from "@/components/shared/text-separator";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -34,10 +34,14 @@ export default function SignUpPage() {
                     </div>
                   </div>
 
-                  <FormField name="firstName" label="Nama" />
-                  <FormField name="emailAddress" label="Email" type="email" />
-                  <FormField name="password" label="Password" type="password" />
-                  <FormField
+                  <ClerkField name="firstName" label="Nama" />
+                  <ClerkField name="emailAddress" label="Email" type="email" />
+                  <ClerkField
+                    name="password"
+                    label="Password"
+                    type="password"
+                  />
+                  <ClerkField
                     name="confirmPassword"
                     label="Konfirmasi Password"
                     type="password"
@@ -47,7 +51,7 @@ export default function SignUpPage() {
                       Terms & Conditions
                     </Label>
                     <div className="mt-2 flex items-center space-x-2">
-                      <Checkbox id="terms" />
+                      <Checkbox id="terms" required />
                       <Label
                         htmlFor="terms"
                         className="text-sm text-muted-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -76,7 +80,7 @@ export default function SignUpPage() {
                       className="w-full"
                       disabled={isGlobalLoading}
                     >
-                      <BadgeCheck width={16} height={16} />
+                      <Icon icon="lucide:badge-check" className="size-4" />
                       <Clerk.Loading scope="provider:google">
                         {isLoading =>
                           isLoading ? "Loading..." : "Register with Google"

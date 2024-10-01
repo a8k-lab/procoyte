@@ -5,18 +5,12 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { AlignJustify, BadgeCheck } from "lucide-react";
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { navLinks } from "@/lib/data";
+import { headerLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export const MainHeader = ({
@@ -44,7 +38,7 @@ export const MainHeader = ({
         </Link>
 
         <ul className="hidden gap-5 text-sm md:flex lg:gap-8">
-          {navLinks.map(nav => (
+          {headerLinks.map(nav => (
             <li key={nav.name}>
               <Link href={nav.href} aria-label={nav.name}>
                 {nav.name}
@@ -58,7 +52,7 @@ export const MainHeader = ({
         <SignedOut>
           <SignInButton>
             <Button>
-              <BadgeCheck width={16} height={16} />
+              <Icon icon="lucide:badge-check" className="size-4" />
               Login
             </Button>
           </SignInButton>
@@ -70,25 +64,6 @@ export const MainHeader = ({
 
           <UserButton />
         </SignedIn>
-
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger className="md:hidden">
-            <AlignJustify />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="md:hidden">
-            {navLinks.map(nav => (
-              <DropdownMenuItem key={nav.name}>
-                <Link
-                  href={nav.href}
-                  aria-label={nav.name}
-                  className="w-full py-1"
-                >
-                  {nav.name}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </header>
   );
