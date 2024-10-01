@@ -1,0 +1,19 @@
+{
+  "id": "mig_crtd52hbnk4rikgni3d0",
+  "parentID": "mig_crtd0ghbnk4rikgni3c0",
+  "checksum": "1:8f6bb2b9443450c0d1abc0d691b7c84de1f960b786b5940cf70637493a8d3351",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "owned_by",
+          "type": "link",
+          "link": {
+            "table": "brands"
+          }
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

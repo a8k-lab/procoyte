@@ -16,17 +16,17 @@ const tables = [
     name: "brands",
     columns: [
       { name: "name", type: "string" },
-      { name: "tag", type: "string" },
       { name: "price", type: "int" },
       { name: "marked", type: "int" },
       { name: "imageUrl", type: "text" },
-      { name: "owned_by_id", type: "text" },
       { name: "mark_reason", type: "text" },
       { name: "location", type: "link", link: { table: "locations" } },
+      { name: "owned_by", type: "link", link: { table: "brands" } },
     ],
     revLinks: [
       { column: "brand", table: "mark_sources" },
       { column: "brand", table: "brands_tags" },
+      { column: "owned_by", table: "brands" },
     ],
   },
   {

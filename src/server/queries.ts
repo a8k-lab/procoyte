@@ -1,25 +1,37 @@
 import "server-only";
 import { db } from "@/lib/db";
+import type { OffsetNavigationOptions } from "@xata.io/client";
 
 export async function getBrands({
   size = 4,
   search,
+  offset,
 }: {
-  size?: number;
   search?: string;
-}) {
-  const brands = await db.brands.getMany({
-    pagination: {
-      size,
-    },
-    filter: {
-      $all: {
-        name: {
-          $iContains: search,
+} & OffsetNavigationOptions = {}) {
+  const brands = await db.brands
+    .select([
+      "id",
+      "name",
+      "imageUrl",
+      "price",
+      "marked",
+      "owned_by.*",
+      "location.*",
+    ])
+    .getMany({
+      pagination: {
+        size,
+        offset,
+      },
+      filter: {
+        $all: {
+          name: {
+            $iContains: search,
+          },
         },
       },
-    },
-  });
+    });
 
   return brands;
 }

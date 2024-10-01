@@ -1,28 +1,27 @@
+import BrandTable from "@/components/table/brand";
+
 import { getBrands } from "@/server/queries";
 
-export default async function AdminHome() {
-  const brands = await getBrands({ size: Number.MAX_SAFE_INTEGER });
+export default async function AdminHome({
+  searchParams,
+}: {
+  searchParams: {
+    size?: string;
+    search?: string;
+    page?: string;
+  };
+}) {
+  const { page = "0", size = "10", search = "" } = searchParams;
 
-  const uniqueTags: { id: string; name: string }[] = brands.reduce(
-    (acc, brand) => {
-      if (!brand.tag) return acc;
-      const tags = brand.tag.split(",").map(tag => tag.trim());
-      for (const tag of tags) {
-        const existingTag = acc.find(t => t.name === tag);
-        if (!existingTag) {
-          acc.push({ id: brand.id, name: tag });
-        }
-      }
-      return acc;
-    },
-    [] as { id: string; name: string }[],
-  );
+  const brands = await getBrands({
+    offset: (+page - 1) * +size,
+    search: search,
+    size: +size,
+  });
 
   return (
-    <>
-      {uniqueTags.map(tag => {
-        return <div key={tag.id}>{tag.name}</div>;
-      })}
-    </>
+    <div className="bg-white rounded-lg border border-border p-4 text-left">
+      <BrandTable brands={brands} />
+    </div>
   );
 }
