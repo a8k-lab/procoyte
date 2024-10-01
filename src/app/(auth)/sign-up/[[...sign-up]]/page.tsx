@@ -5,7 +5,7 @@ import * as SignUp from "@clerk/elements/sign-up";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 
-import { FormField } from "@/components/shared/form-field";
+import { ClerkField } from "@/components/shared/form-field";
 import { TextSeparator } from "@/components/shared/text-separator";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -34,10 +34,14 @@ export default function SignUpPage() {
                     </div>
                   </div>
 
-                  <FormField name="firstName" label="Nama" />
-                  <FormField name="emailAddress" label="Email" type="email" />
-                  <FormField name="password" label="Password" type="password" />
-                  <FormField
+                  <ClerkField name="firstName" label="Nama" />
+                  <ClerkField name="emailAddress" label="Email" type="email" />
+                  <ClerkField
+                    name="password"
+                    label="Password"
+                    type="password"
+                  />
+                  <ClerkField
                     name="confirmPassword"
                     label="Konfirmasi Password"
                     type="password"

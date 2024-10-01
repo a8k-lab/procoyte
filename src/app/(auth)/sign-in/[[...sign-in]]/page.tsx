@@ -5,7 +5,7 @@ import * as SignIn from "@clerk/elements/sign-in";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 
-import { FormField } from "@/components/shared/form-field";
+import { ClerkField } from "@/components/shared/form-field";
 import { TextSeparator } from "@/components/shared/text-separator";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -33,8 +33,8 @@ export default function Page() {
                     </div>
                   </div>
 
-                  <FormField name="identifier" label="Email" type="email" />
-                  <FormField
+                  <ClerkField name="identifier" label="Email" type="email" />
+                  <ClerkField
                     name="password"
                     label="Password"
                     type="password"

@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 
+import { FormField } from "@/components/shared/form-field";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -85,60 +84,52 @@ export default function ForgotPasswordPage() {
       <title>Procoyte | Forgot Password</title>
 
       <section className="w-[480px] py-6 px-4 bg-background rounded-3xl sm:p-8 sm:border">
-        <h1 className="text-2xl font-semibold mb-4">Forgot Password?</h1>
+        <div className="mb-8 space-y-1">
+          <h1 className="text-2xl font-semibold">Forgot Password?</h1>
+          <p className="text-sm text-muted-foreground">
+            Reset password untuk akun Anda menggunakan alamat email.
+          </p>
+        </div>
+
         <form
           className="flex flex-col gap-4"
           onSubmit={!successfulCreation ? create : reset}
         >
           {!successfulCreation && (
             <>
-              <div className="space-y-2">
-                <Label htmlFor="email">Masukkan alamat email Anda</Label>
-                <Input
-                  type="email"
-                  placeholder="e.g john@doe.com"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                />
-              </div>
+              <FormField
+                name="email"
+                label="Masukkan alamat email"
+                type="email"
+                onChange={e => setEmail(e.target.value)}
+              />
 
               <Button type="submit" disabled={isLoading}>
                 {isLoading ? "Loading..." : "Kirim kode reset password"}
               </Button>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {error && <p className="text-destructive text-sm">{error}</p>}
             </>
           )}
 
           {successfulCreation && (
             <>
-              <div className="space-y-2">
-                <Label htmlFor="password">Masukkan password baru</Label>
-                <Input
-                  type="password"
-                  placeholder="***"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                />
-              </div>
+              <FormField
+                name="password"
+                label="Masukkan password baru"
+                type="password"
+                onChange={e => setPassword(e.target.value)}
+              />
 
-              <div className="space-y-2">
-                <Label htmlFor="code">
-                  Masukkan kode reset password yang dikirimkan ke email
-                </Label>
-                <Input
-                  type="text"
-                  value={code}
-                  onChange={e => setCode(e.target.value)}
-                  required
-                />
-              </div>
+              <FormField
+                name="code"
+                label="Masukkan kode reset password yang dikirimkan ke email"
+                onChange={e => setCode(e.target.value)}
+              />
 
               <Button type="submit" disabled={isLoading}>
                 {isLoading ? "Loading..." : "Reset"}
               </Button>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {error && <p className="text-destructive text-sm">{error}</p>}
             </>
           )}
 

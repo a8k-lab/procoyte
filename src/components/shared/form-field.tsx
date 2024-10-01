@@ -1,22 +1,21 @@
 import * as Clerk from "@clerk/elements/common";
-import type { HTMLInputTypeAttribute } from "react";
+import type { InputHTMLAttributes } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-type FormFieldProps = {
+type FieldProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
   label: string;
   suffixLabel?: React.ReactNode;
-  type?: HTMLInputTypeAttribute;
 };
 
-export const FormField = ({
+export const ClerkField = ({
   name,
   label,
   suffixLabel,
   type = "text",
-}: FormFieldProps) => {
+}: FieldProps) => {
   return (
     <Clerk.Field name={name} className="space-y-2">
       <Clerk.Label asChild>
@@ -30,5 +29,16 @@ export const FormField = ({
       </Clerk.Input>
       <Clerk.FieldError className="block text-sm text-destructive" />
     </Clerk.Field>
+  );
+};
+
+export const FormField = ({ name, label, type = "text" }: FieldProps) => {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={name} className="text-base">
+        {label}
+      </Label>
+      <Input type={type} name={name} required />
+    </div>
   );
 };
