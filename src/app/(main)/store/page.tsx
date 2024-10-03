@@ -19,47 +19,46 @@ export default function StorePage() {
         </p>
       </section>
 
-      <section className="mt-3">
-        <Tabs defaultValue="product">
-          <TabsList className="w-full bg-muted">
-            <TabsTrigger value="product" className="w-1/2">
-              Produk
-            </TabsTrigger>
-            <TabsTrigger value="brand" className="w-1/2">
-              Brand
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="product">
-            <Input
-              suffixIcon={<Icon icon="carbon:search" className="w-4 h-4" />}
-              placeholder="Cari di Procoyte store"
-            />
-          </TabsContent>
-          <TabsContent value="brand">
-            <Input
-              suffixIcon={<Icon icon="carbon:search" className="w-4 h-4" />}
-              placeholder="Cari di Procoyte store"
-            />
-          </TabsContent>
-        </Tabs>
-      </section>
+      <Tabs defaultValue="product" className="mt-3">
+        <TabsList className="w-full bg-muted">
+          <TabsTrigger value="product" className="w-1/2">
+            Produk
+          </TabsTrigger>
+          <TabsTrigger value="brand" className="w-1/2">
+            Brand
+          </TabsTrigger>
+        </TabsList>
 
-      <section className="mt-3 grid grid-cols-2 gap-1">
-        <ProductCard
-          name="Total Care Mouthwash C."
-          imageSrc="/images/logo.svg"
-          price={1200000}
-          rating={4.9}
-          merchant="shopee"
+        <Input
+          suffixIcon={<Icon icon="carbon:search" className="size-4" />}
+          placeholder="Cari di Procoyte store"
+          className="my-3"
         />
-        <ProductCard
-          name="Total Care Mouthwash C."
-          imageSrc="/images/logo.svg"
-          price={1200000}
-          rating={4.7}
-          merchant="tokopedia"
-        />
-      </section>
+
+        <TabsContent value="product">
+          <section className="grid grid-cols-2 gap-1">
+            <ProductCard
+              name="Total Care Mouthwash C."
+              imageSrc="/images/logo.svg"
+              price={1200000}
+              rating={4.9}
+              merchant="shopee"
+            />
+            <ProductCard
+              name="Total Care Mouthwash C."
+              imageSrc="/images/logo.svg"
+              price={1200000}
+              rating={4.7}
+              merchant="tokopedia"
+            />
+          </section>
+        </TabsContent>
+        <TabsContent value="brand">
+          <section>
+            <h1 className="text-muted-foreground">Brand tab here</h1>
+          </section>
+        </TabsContent>
+      </Tabs>
     </>
   );
 }
