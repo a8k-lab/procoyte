@@ -11,3 +11,12 @@ export function showPrice(price: number): string {
     .map(_ => "$")
     .join("");
 }
+
+export function rupiahFormatter(price: number): string {
+  return price.toLocaleString("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
