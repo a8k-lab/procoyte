@@ -13,10 +13,10 @@ export function showPrice(price: number): string {
 }
 
 export function rupiahFormatter(price: number): string {
-  return price.toLocaleString("id-ID", {
+  return Number(price).toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   });
 }
