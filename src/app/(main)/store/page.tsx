@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 
+import { ProductCard } from "@/components/shared/card/product";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -41,6 +42,23 @@ export default function StorePage() {
             />
           </TabsContent>
         </Tabs>
+      </section>
+
+      <section className="mt-3 grid grid-cols-2 gap-1">
+        <ProductCard
+          name="Total Care Mouthwash C."
+          imageSrc="/images/logo.svg"
+          price={1200000}
+          rating={4.9}
+          merchant="shopee"
+        />
+        <ProductCard
+          name="Total Care Mouthwash C."
+          imageSrc="/images/logo.svg"
+          price={1200000}
+          rating={4.7}
+          merchant="tokopedia"
+        />
       </section>
     </>
   );
