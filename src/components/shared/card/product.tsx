@@ -9,7 +9,7 @@ type ProductCardProps = {
   price: number;
   rating?: number;
   imageSrc: string;
-  merchant: "tokopedia" | "shopee"; // TODO: add more merchant
+  merchant: "tokopedia" | "shopee"; // Temporary (?)
 };
 
 export const ProductCard = ({
@@ -22,7 +22,7 @@ export const ProductCard = ({
   return (
     <Link href="#" className="group">
       <article className="bg-white overflow-hidden rounded-xl border text-sm text-left font-semibold">
-        <div className="h-[140px] w-full relative">
+        <div className="h-[140px] w-full relative overflow-hidden">
           <Image
             src={imageSrc}
             alt={name}
