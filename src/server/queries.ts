@@ -80,3 +80,26 @@ export async function postBrandTag({
   });
   return brandTag;
 }
+
+export async function getLocations({
+  size = 10,
+  search,
+}: {
+  size?: number;
+  search?: string;
+}) {
+  const locations = await db.locations.getMany({
+    pagination: {
+      size: size,
+    },
+    filter: {
+      $all: {
+        name: {
+          $iContains: search,
+        },
+      },
+    },
+  });
+
+  return JSON.parse(JSON.stringify(locations));
+}
