@@ -9,7 +9,7 @@ type ProductCardProps = {
   price: number;
   rating?: number;
   imageSrc: string;
-  merchant: "tokopedia" | "shopee"; // Temporary (?)
+  merchant: "tokopedia" | "shopee"; // Temporary
 };
 
 export const ProductCard = ({
@@ -20,8 +20,8 @@ export const ProductCard = ({
   merchant,
 }: ProductCardProps) => {
   return (
-    <Link href="#" className="group">
-      <article className="bg-white overflow-hidden rounded-xl border text-sm text-left font-semibold">
+    <Link href="#" aria-label={name} className="group">
+      <article className="bg-white h-full overflow-hidden rounded-xl border text-sm text-left font-semibold">
         <div className="h-[140px] w-full relative overflow-hidden">
           <Image
             src={imageSrc}
@@ -31,19 +31,26 @@ export const ProductCard = ({
           />
         </div>
 
-        <div className="p-2 space-y-1.5 border-t">
-          <div className="flex items-center gap-0.5">
-            <Icon icon="ph:star-fill" width={18} className="text-orange-500" />
-            <span>{rating}</span>
+        <div className="flex flex-col gap-2 p-2 h-[calc(100%-140px)] border-t">
+          <div className="space-y-1.5 flex-grow">
+            <div className="flex items-center gap-0.5">
+              <Icon
+                icon="ph:star-fill"
+                width={18}
+                className="text-orange-500"
+              />
+              <span>{rating}</span>
+            </div>
+            <h1 className="truncate">{name}</h1>
+            <h2 className="text-xs text-primary">{rupiahFormatter(price)}</h2>
           </div>
-          <h1 className="truncate">{name}</h1>
-          <h2 className="text-xs text-primary">{rupiahFormatter(price)}</h2>
+
           <Image
             src={`/images/merchants/${merchant}.webp`}
             alt={merchant}
             width={74}
             height={24}
-            className="mt-0.5"
+            className="mt-auto"
           />
         </div>
       </article>
