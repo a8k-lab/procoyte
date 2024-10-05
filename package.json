@@ -31,6 +31,11 @@
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
+    "@tiptap/extension-list-item": "^2.8.0",
+    "@tiptap/extension-text-style": "^2.8.0",
+    "@tiptap/pm": "^2.8.0",
+    "@tiptap/react": "^2.8.0",
+    "@tiptap/starter-kit": "^2.8.0",
     "@uploadthing/react": "6.8.0",
     "@xata.io/client": "^0.30.0",
     "class-variance-authority": "^0.7.0",
@@ -51,7 +56,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.0",
+    "@biomejs/biome": "^1.9.0",
     "@cloudflare/next-on-pages": "^1.13.2",
     "@cloudflare/workers-types": "^4.20240909.0",
     "@commitlint/cli": "^19.5.0",

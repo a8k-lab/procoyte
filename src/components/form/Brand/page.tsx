@@ -1,6 +1,7 @@
 "use client";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 
+import TextEditor from "@/components/shared/text-editor";
 import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/ui/combobox";
 import {
@@ -123,7 +124,8 @@ export default function BrandFormPage({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Alasan di tandai</FormLabel>
-              <Input {...field} placeholder="Masukkan alasan" />
+              <TextEditor />
+              {/* <Input {...field} placeholder="Masukkan alasan" /> */}
             </FormItem>
           )}
         />
