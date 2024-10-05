@@ -17,6 +17,13 @@ const nextConfig = {
         port: '',
         pathname: '/wikipedia/**',
       },
+      // https://utfs.io
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -101,5 +101,7 @@ export async function getLocations({
     },
   });
 
-  return JSON.parse(JSON.stringify(locations));
+  return JSON.parse(JSON.stringify(locations)) as Awaited<
+    ReturnType<typeof db.locations.getMany>
+  >;
 }

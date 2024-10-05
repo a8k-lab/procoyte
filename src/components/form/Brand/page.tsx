@@ -1,12 +1,14 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { type ControllerRenderProps, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Combobox } from "@/components/ui/combobox";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { UploadButton } from "@/lib/uploadthings";
 import { getLocationsAction } from "@/server/actions";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 
@@ -20,12 +22,14 @@ const FormSchema = z.object({
   ownedBy: z.string().optional(),
 });
 
+type FormSchemaData = z.infer<typeof FormSchema>;
+
 export default function BrandFormPage({
   defaultValues,
 }: {
   defaultValues?: z.infer<typeof FormSchema>;
 }) {
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<FormSchemaData>({
     resolver: zodResolver(FormSchema),
     defaultValues: defaultValues,
   });
@@ -66,12 +70,7 @@ export default function BrandFormPage({
         <FormField
           control={form.control}
           name="imageUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Gambar</FormLabel>
-              <Input {...field} placeholder="Masukkan URL gambar" />
-            </FormItem>
-          )}
+          render={({ field }) => <ImageUpload field={field} />}
         />
         <FormField
           control={form.control}
@@ -135,6 +134,32 @@ function LocationCombobox() {
       <Combobox
         options={options}
         setInputValue={value => setInputValue(value)}
+      />
+    </FormItem>
+  );
+}
+
+function ImageUpload({
+  field,
+}: {
+  field: ControllerRenderProps<FormSchemaData, "imageUrl">;
+}) {
+  return (
+    <FormItem>
+      <FormLabel>Gambar</FormLabel>
+      <Input {...field} placeholder="Masukkan URL gambar" />
+      <Image src={field.value || ""} alt="Gambar" width={200} height={200} />
+      <UploadButton
+        onUploadError={(error: Error) => {
+          // Do something with the error.
+          console.log("Error: ", error);
+          alert(`ERROR! ${error.message}`);
+        }}
+        onClientUploadComplete={res => {
+          console.log(res);
+          field.onChange(res[0].url);
+        }}
+        endpoint="imageUploader"
       />
     </FormItem>
   );
