@@ -1,25 +1,34 @@
 "use client";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-
+import { Button } from "@/components/ui/button";
 import { Combobox } from "@/components/ui/combobox";
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { UploadButton } from "@/lib/uploadthings";
-import { getLocationsAction } from "@/server/actions";
+import { getBrandsAction, getLocationsAction } from "@/server/actions";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import { useDebounceValue } from "usehooks-ts";
 import { z } from "zod";
 
 const FormSchema = z.object({
   name: z.string().min(1).optional(),
-  price: z.number().min(1).optional(),
-  marked: z.number().min(0).max(1).optional(),
+  price: z.number().min(0).max(5).optional(),
+  marked: z.enum(["0", "1"]).optional(),
   imageUrl: z.string().optional(),
-  location: z.string().optional(),
+  location: z.object({ value: z.string(), label: z.string() }).optional(),
   markReason: z.string().optional(),
-  ownedBy: z.string().optional(),
+  ownedBy: z.object({ value: z.string(), label: z.string() }).optional(),
 });
 
 type FormSchemaData = z.infer<typeof FormSchema>;
@@ -36,7 +45,7 @@ export default function BrandFormPage({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(console.log)}>
+      <form onSubmit={form.handleSubmit(console.log)} className="[&>div]:mb-4">
         <FormField
           control={form.control}
           name="name"
@@ -44,6 +53,7 @@ export default function BrandFormPage({
             <FormItem>
               <FormLabel>Nama</FormLabel>
               <Input {...field} placeholder="Masukkan nama brand" />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -53,7 +63,13 @@ export default function BrandFormPage({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Harga</FormLabel>
-              <Input {...field} placeholder="Masukkan harga" />
+              <Input
+                {...field}
+                type="number"
+                onChange={e => field.onChange(Number(e.target.value))}
+                placeholder="Masukkan harga"
+              />
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -63,7 +79,31 @@ export default function BrandFormPage({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Ditandai?</FormLabel>
-              <Input {...field} placeholder="Masukkan harga" />
+              {/* Radio */}
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  name="marked"
+                >
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="0" />
+                    </FormControl>
+                    <FormLabel className="font-normal">
+                      Tidak Ditandai
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="1" />
+                    </FormControl>
+                    <FormLabel className="font-normal">Ditandai</FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -75,7 +115,7 @@ export default function BrandFormPage({
         <FormField
           control={form.control}
           name="location"
-          render={({ field }) => <LocationCombobox />}
+          render={({ field }) => <LocationCombobox field={field} />}
         />
         <FormField
           control={form.control}
@@ -90,21 +130,22 @@ export default function BrandFormPage({
         <FormField
           control={form.control}
           name="ownedBy"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pemilik</FormLabel>
-              <Input {...field} placeholder="Masukkan nama pemilik" />
-            </FormItem>
-          )}
+          render={({ field }) => <OwnerBrandCombobox field={field} />}
         />
 
-        <button type="submit">Simpan</button>
+        <Button className="ml-auto" type="submit">
+          Simpan
+        </Button>
       </form>
     </Form>
   );
 }
 
-function LocationCombobox() {
+function LocationCombobox({
+  field,
+}: {
+  field: ControllerRenderProps<FormSchemaData, "location">;
+}) {
   const [inputValue, setInputValue] = useState("");
 
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
@@ -116,6 +157,7 @@ function LocationCombobox() {
       size: 10,
       search: inputValue,
     });
+
     setOptions(
       response.map(location => ({
         value: location.id,
@@ -124,14 +166,74 @@ function LocationCombobox() {
     );
   }, []);
 
+  const [debouncedInputValue] = useDebounceValue(inputValue, 500);
+
   useEffect(() => {
-    fetchData(inputValue);
-  }, [inputValue, fetchData]);
+    fetchData(debouncedInputValue);
+  }, [debouncedInputValue, fetchData]);
 
   return (
     <FormItem>
-      <FormLabel>Lokasi</FormLabel>
+      <FormLabel className="block">Lokasi</FormLabel>
       <Combobox
+        async
+        inputValue={inputValue}
+        onCreate={value =>
+          field.onChange({
+            label: value,
+            value: "__new__",
+          })
+        }
+        options={options}
+        setInputValue={value => setInputValue(value)}
+      />
+    </FormItem>
+  );
+}
+
+function OwnerBrandCombobox({
+  field,
+}: {
+  field: ControllerRenderProps<FormSchemaData, "ownedBy">;
+}) {
+  const [inputValue, setInputValue] = useState("");
+
+  const [options, setOptions] = useState<{ value: string; label: string }[]>(
+    [],
+  );
+
+  const fetchData = useCallback(async (inputValue: string) => {
+    const response = await getBrandsAction({
+      size: 10,
+      search: inputValue,
+    });
+
+    setOptions(
+      response.map(brand => ({
+        value: brand.id ?? "",
+        label: brand.name ?? "",
+      })),
+    );
+  }, []);
+
+  const [debouncedInputValue] = useDebounceValue(inputValue, 500);
+
+  useEffect(() => {
+    fetchData(debouncedInputValue);
+  }, [debouncedInputValue, fetchData]);
+
+  return (
+    <FormItem>
+      <FormLabel className="block">Pemilik brand</FormLabel>
+      <Combobox
+        async
+        inputValue={inputValue}
+        onCreate={value =>
+          field.onChange({
+            label: value,
+            value: "__new__",
+          })
+        }
         options={options}
         setInputValue={value => setInputValue(value)}
       />
@@ -147,20 +249,21 @@ function ImageUpload({
   return (
     <FormItem>
       <FormLabel>Gambar</FormLabel>
-      <Input {...field} placeholder="Masukkan URL gambar" />
       <Image src={field.value || ""} alt="Gambar" width={200} height={200} />
-      <UploadButton
-        onUploadError={(error: Error) => {
-          // Do something with the error.
-          console.log("Error: ", error);
-          alert(`ERROR! ${error.message}`);
-        }}
-        onClientUploadComplete={res => {
-          console.log(res);
-          field.onChange(res[0].url);
-        }}
-        endpoint="imageUploader"
-      />
+      <p className="text-xs text-muted-foreground">{field.value}</p>
+      <div className="w-min p-4">
+        <UploadButton
+          onUploadError={(error: Error) => {
+            // Do something with the error.
+            console.log("Error: ", error);
+            alert(`ERROR! ${error.message}`);
+          }}
+          onClientUploadComplete={res => {
+            field.onChange(res[0].url);
+          }}
+          endpoint="imageUploader"
+        />
+      </div>
     </FormItem>
   );
 }

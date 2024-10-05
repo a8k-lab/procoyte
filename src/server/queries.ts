@@ -33,11 +33,13 @@ export async function getBrands({
       },
     });
 
-  return brands;
+  return JSON.parse(JSON.stringify(brands)) as Awaited<
+    ReturnType<typeof db.brands.getMany>
+  >;
 }
 
 export async function getBrand({ id }: { id: string }) {
-  const brand = await db.brands.read(id, ["*", "location.*"]);
+  const brand = await db.brands.read(id, ["*", "location.*", "owned_by.*"]);
   return brand;
 }
 

@@ -8,16 +8,24 @@ export default async function AdminBrandPage({
 }) {
   const brand = await getBrand({ id: params.id });
   return (
-    <BrandFormPage
-      defaultValues={{
-        imageUrl: brand?.imageUrl || undefined,
-        name: brand?.name || undefined,
-        price: brand?.price || undefined,
-        marked: brand?.marked || undefined,
-        location: brand?.location?.id,
-        markReason: brand?.mark_reason || undefined,
-        ownedBy: brand?.owned_by?.id,
-      }}
-    />
+    <div className="p-4 bg-white rounded text-left">
+      <BrandFormPage
+        defaultValues={{
+          imageUrl: brand?.imageUrl || undefined,
+          name: brand?.name || undefined,
+          price: brand?.price || undefined,
+          marked: brand?.marked ? (`${brand.marked}` as "0" | "1") : undefined,
+          location: {
+            value: brand?.location?.id || "",
+            label: brand?.location?.name || "",
+          },
+          markReason: brand?.mark_reason || undefined,
+          ownedBy: {
+            value: brand?.owned_by?.id || "",
+            label: brand?.owned_by?.name || "",
+          },
+        }}
+      />
+    </div>
   );
 }
