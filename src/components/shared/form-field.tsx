@@ -15,6 +15,7 @@ export const ClerkField = ({
   label,
   suffixLabel,
   type = "text",
+  ...props
 }: FieldProps) => {
   return (
     <Clerk.Field name={name} className="space-y-2">
@@ -24,7 +25,7 @@ export const ClerkField = ({
           {Boolean(suffixLabel) && suffixLabel}
         </div>
       </Clerk.Label>
-      <Clerk.Input type={type} required asChild>
+      <Clerk.Input type={type} required asChild {...props}>
         <Input placeholder={`Masukkan ${label}`} />
       </Clerk.Input>
       <Clerk.FieldError className="block text-sm text-destructive" />
@@ -32,13 +33,18 @@ export const ClerkField = ({
   );
 };
 
-export const FormField = ({ name, label, type = "text" }: FieldProps) => {
+export const FormField = ({
+  name,
+  label,
+  type = "text",
+  ...props
+}: FieldProps) => {
   return (
     <div className="space-y-2">
       <Label htmlFor={name} className="text-base">
         {label}
       </Label>
-      <Input type={type} name={name} required />
+      <Input type={type} name={name} required {...props} />
     </div>
   );
 };
