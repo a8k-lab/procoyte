@@ -4,7 +4,6 @@ import { Inter, Poppins } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 
 import "./globals.css";
-import { BackgroundBlur } from "@/components/shared/background-blur";
 
 const poppins = Poppins({
   weight: ["700"],
@@ -90,7 +89,6 @@ export default function RootLayout({
       <html lang="en" className={`${poppins.variable} ${inter.variable} `}>
         <body className="relative bg-[#F4F4F5]">
           <NextTopLoader color="#1A96F7" height={4} />
-          <BackgroundBlur />
 
           {children}
         </body>
