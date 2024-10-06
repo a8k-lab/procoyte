@@ -81,7 +81,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <>
-      <title>Procoyte | Forgot Password</title>
+      <title>Forgot Password</title>
 
       <section className="w-[480px] py-6 px-4 bg-background rounded-3xl sm:p-8 sm:border">
         <div className="mb-8 space-y-1">

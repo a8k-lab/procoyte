@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export default function SignUpPage() {
   return (
     <>
-      <title>Procoyte | Register</title>
+      <title>Register</title>
 
       <section className="w-[480px] py-6 px-4 bg-background rounded-3xl sm:p-8 sm:border">
         <SignUp.Root>

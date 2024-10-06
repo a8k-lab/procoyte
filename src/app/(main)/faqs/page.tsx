@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import type { Metadata } from "next";
 
 import {
   Accordion,
@@ -8,11 +9,13 @@ import {
 } from "@/components/ui/accordion";
 import { faqs } from "@/lib/data";
 
+export const metadata: Metadata = {
+  title: "FAQs",
+};
+
 export default function FAQsPage() {
   return (
     <>
-      <title>Procoyte | Frequently Asked Questions</title>
-
       <section>
         <div className="flex items-center justify-center gap-1.5">
           <Icon icon="streamline:star-2-solid" />

@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 export default function Page() {
   return (
     <>
-      <title>Procoyte | Login</title>
+      <title>Login</title>
 
       <section className="w-[480px] py-6 px-4 bg-background rounded-3xl sm:p-8 sm:border">
         <SignIn.Root>

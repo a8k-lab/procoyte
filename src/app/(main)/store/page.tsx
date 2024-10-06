@@ -1,14 +1,17 @@
 import { Icon } from "@iconify/react";
+import type { Metadata } from "next";
 
 import { ProductCard } from "@/components/shared/card/product";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+export const metadata: Metadata = {
+  title: "Store",
+};
+
 export default function StorePage() {
   return (
     <>
-      <title>Procoyte | Store</title>
-
       <section>
         <div className="flex items-center justify-center gap-1.5">
           <Icon icon="streamline:star-2-solid" />
