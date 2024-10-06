@@ -4,6 +4,7 @@ import NextTopLoader from "nextjs-toploader";
 
 import "./globals.css";
 import { BackgroundBlur } from "@/components/shared/background-blur";
+import { Toaster } from "@/components/ui/toaster";
 
 export const runtime = "edge";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
         <body className="relative bg-[#F4F4F5]">
           <NextTopLoader color="#1A96F7" height={4} />
           <BackgroundBlur />
+          <Toaster />
 
           {children}
         </body>

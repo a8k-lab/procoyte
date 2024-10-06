@@ -14,8 +14,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "@/hooks/use-toast";
 import { UploadButton } from "@/lib/uploadthings";
-import { getBrandsAction, getLocationsAction } from "@/server/actions";
+import {
+  getBrandsAction,
+  getLocationsAction,
+  postBrandAction,
+} from "@/server/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
@@ -36,17 +41,46 @@ type FormSchemaData = z.infer<typeof FormSchema>;
 
 export default function BrandFormPage({
   defaultValues,
+  edit,
 }: {
   defaultValues?: z.infer<typeof FormSchema>;
+  edit?: boolean;
 }) {
   const form = useForm<FormSchemaData>({
     resolver: zodResolver(FormSchema),
     defaultValues: defaultValues,
   });
 
+  const handleSubmit = form.handleSubmit(data => {
+    if (edit) {
+    } else {
+      postBrandAction({
+        imageUrl: data.imageUrl ?? "",
+        name: data.name ?? "",
+        price: data.price ?? 0,
+        marked: data?.marked ? +data.marked : 0,
+        mark_reason: data.markReason ?? "",
+        location: data.location
+          ? {
+              id: data.location?.value,
+            }
+          : undefined,
+        owned_by: data.ownedBy?.value
+          ? {
+              id: data.ownedBy.value,
+            }
+          : undefined,
+      }).then(() => {
+        toast({
+          title: "Brand berhasil ditambahkan",
+        });
+      });
+    }
+  });
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(console.log)} className="[&>div]:mb-4">
+      <form onSubmit={handleSubmit} className="[&>div]:mb-4">
         <FormField
           control={form.control}
           name="name"
@@ -124,7 +158,10 @@ export default function BrandFormPage({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Alasan di tandai</FormLabel>
-              <TextEditor />
+              <TextEditor
+                onChange={value => field.onChange(value?.editor?.getHTML())}
+                value={field.value ?? ""}
+              />
               {/* <Input {...field} placeholder="Masukkan alasan" /> */}
             </FormItem>
           )}

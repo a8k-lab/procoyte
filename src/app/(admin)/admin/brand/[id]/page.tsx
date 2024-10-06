@@ -10,6 +10,7 @@ export default async function AdminBrandPage({
   return (
     <div className="p-4 bg-white rounded text-left">
       <BrandFormPage
+        edit
         defaultValues={{
           imageUrl: brand?.imageUrl || undefined,
           name: brand?.name || undefined,

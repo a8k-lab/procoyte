@@ -1,6 +1,11 @@
 import "server-only";
 import { db } from "@/lib/db";
-import type { OffsetNavigationOptions } from "@xata.io/client";
+import type { BrandsRecord } from "@/xata";
+import type {
+  EditableData,
+  Identifiable,
+  OffsetNavigationOptions,
+} from "@xata.io/client";
 
 export async function getBrands({
   size = 4,
@@ -30,6 +35,9 @@ export async function getBrands({
             $iContains: search,
           },
         },
+      },
+      sort: {
+        "xata.createdAt": "desc",
       },
     });
 
@@ -106,4 +114,28 @@ export async function getLocations({
   return JSON.parse(JSON.stringify(locations)) as Awaited<
     ReturnType<typeof db.locations.getMany>
   >;
+}
+
+export type PostBrandParams = Omit<EditableData<BrandsRecord>, "id"> &
+  Partial<Identifiable>;
+
+export async function postBrand({
+  name,
+  price,
+  marked,
+  imageUrl,
+  location,
+  mark_reason,
+  owned_by,
+}: PostBrandParams) {
+  const brand = await db.brands.create({
+    name,
+    price,
+    marked,
+    imageUrl,
+    location,
+    mark_reason,
+    owned_by,
+  });
+  return brand;
 }

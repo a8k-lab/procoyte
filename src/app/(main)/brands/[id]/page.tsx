@@ -1,9 +1,9 @@
-import { getBrand, getBrandMarkSources } from "@/server/queries";
-import { Icon } from "@iconify/react";
-import sanitizeHtml from "sanitize-html";
-import Image from "next/image";
 import RouterButton from "@/components/shared/router-button";
 import { cn } from "@/lib/utils";
+import { getBrand, getBrandMarkSources } from "@/server/queries";
+import { Icon } from "@iconify/react";
+import Image from "next/image";
+import sanitizeHtml from "sanitize-html";
 
 export default async function BrandPage({
   params: { id },
@@ -14,7 +14,6 @@ export default async function BrandPage({
   return (
     <div>
       <Header />
-
       <Content brand={brand} />
     </div>
   );

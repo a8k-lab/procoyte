@@ -1,5 +1,10 @@
 "use server";
-import { getBrands, getLocations } from "./queries";
+import {
+  type PostBrandParams,
+  getBrands,
+  getLocations,
+  postBrand,
+} from "./queries";
 
 export async function getLocationsAction({
   size = 10,
@@ -24,5 +29,25 @@ export async function getBrandsAction({
   return getBrands({
     size,
     search,
+  });
+}
+
+export async function postBrandAction({
+  name,
+  price,
+  marked,
+  imageUrl,
+  location,
+  mark_reason,
+  owned_by,
+}: PostBrandParams) {
+  return postBrand({
+    name,
+    price,
+    marked,
+    imageUrl,
+    location,
+    mark_reason,
+    owned_by,
   });
 }
