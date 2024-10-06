@@ -1,14 +1,6 @@
-import type { Metadata } from "next";
-
 import { BottomNav } from "@/components/layout/bottom-nav";
 import { MainHeader } from "@/components/layout/main-header";
 import { cn } from "@/lib/utils";
-
-export const metadata: Metadata = {
-  title: "Procoyte | Cek Status Boikot Produk dengan Mudah",
-  description:
-    "Cek status boikot produk secara cepat dan mudah. Masukkan tautan atau nama produk untuk melihat apakah masuk daftar boikot terbaru. Dukung kampanye global dan temukan alternatif yang direkomendasikan.",
-};
 
 export default function MainLayout({
   children,

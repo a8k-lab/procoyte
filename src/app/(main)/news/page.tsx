@@ -1,15 +1,18 @@
 import { Icon } from "@iconify/react";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import BrandCard from "@/components/shared/card/brand";
 import { NewsCard } from "@/components/shared/card/news";
 import { getBrands } from "@/server/queries";
 
+export const metadata: Metadata = {
+  title: "Berita",
+};
+
 export default function NewsPage() {
   return (
     <>
-      <title>Procoyte | Berita</title>
-
       <section>
         <div className="flex items-center justify-center gap-1.5">
           <Icon icon="streamline:star-2-solid" />

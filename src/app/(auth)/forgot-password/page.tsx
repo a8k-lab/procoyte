@@ -1,12 +1,17 @@
 "use client";
 
 import { useAuth, useSignIn } from "@clerk/nextjs";
+import type { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useState } from "react";
 
 import { FormField } from "@/components/shared/form-field";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Forgot Password",
+};
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -80,66 +85,62 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <>
-      <title>Procoyte | Forgot Password</title>
+    <section className="w-[480px] py-6 px-4 bg-background rounded-3xl sm:p-8 sm:border">
+      <div className="mb-8 space-y-1">
+        <h1 className="text-2xl font-semibold">Forgot Password?</h1>
+        <p className="text-sm text-muted-foreground">
+          Reset password untuk akun Anda menggunakan alamat email.
+        </p>
+      </div>
 
-      <section className="w-[480px] py-6 px-4 bg-background rounded-3xl sm:p-8 sm:border">
-        <div className="mb-8 space-y-1">
-          <h1 className="text-2xl font-semibold">Forgot Password?</h1>
-          <p className="text-sm text-muted-foreground">
-            Reset password untuk akun Anda menggunakan alamat email.
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={!successfulCreation ? create : reset}
+      >
+        {!successfulCreation && (
+          <>
+            <FormField
+              name="email"
+              label="Masukkan alamat email"
+              type="email"
+              onChange={e => setEmail(e.target.value)}
+            />
+
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Loading..." : "Kirim kode reset password"}
+            </Button>
+            {error && <p className="text-destructive text-sm">{error}</p>}
+          </>
+        )}
+
+        {successfulCreation && (
+          <>
+            <FormField
+              name="password"
+              label="Masukkan password baru"
+              type="password"
+              onChange={e => setPassword(e.target.value)}
+            />
+
+            <FormField
+              name="code"
+              label="Masukkan kode reset password yang dikirimkan ke email"
+              onChange={e => setCode(e.target.value)}
+            />
+
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Loading..." : "Reset"}
+            </Button>
+            {error && <p className="text-destructive text-sm">{error}</p>}
+          </>
+        )}
+
+        {secondFactor && (
+          <p className="text-yellow-500 text-sm">
+            2FA is required, but this UI does not handle that
           </p>
-        </div>
-
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={!successfulCreation ? create : reset}
-        >
-          {!successfulCreation && (
-            <>
-              <FormField
-                name="email"
-                label="Masukkan alamat email"
-                type="email"
-                onChange={e => setEmail(e.target.value)}
-              />
-
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Loading..." : "Kirim kode reset password"}
-              </Button>
-              {error && <p className="text-destructive text-sm">{error}</p>}
-            </>
-          )}
-
-          {successfulCreation && (
-            <>
-              <FormField
-                name="password"
-                label="Masukkan password baru"
-                type="password"
-                onChange={e => setPassword(e.target.value)}
-              />
-
-              <FormField
-                name="code"
-                label="Masukkan kode reset password yang dikirimkan ke email"
-                onChange={e => setCode(e.target.value)}
-              />
-
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Loading..." : "Reset"}
-              </Button>
-              {error && <p className="text-destructive text-sm">{error}</p>}
-            </>
-          )}
-
-          {secondFactor && (
-            <p className="text-yellow-500 text-sm">
-              2FA is required, but this UI does not handle that
-            </p>
-          )}
-        </form>
-      </section>
-    </>
+        )}
+      </form>
+    </section>
   );
 }

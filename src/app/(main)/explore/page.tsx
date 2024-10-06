@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import BrandCard from "@/components/shared/card/brand";
@@ -6,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getBrands } from "@/server/queries";
 
+export const metadata: Metadata = {
+  title: "Produk & Brand",
+};
+
 export default function ExplorePage() {
   return (
     <>
-      <title>Procoyte | Berita</title>
-
       <section>
         <div className="flex items-center justify-center gap-1.5">
           <Icon icon="streamline:star-2-solid" />

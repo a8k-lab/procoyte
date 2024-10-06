@@ -1,22 +1,33 @@
-import { getBrand, getBrandMarkSources } from "@/server/queries";
 import { Icon } from "@iconify/react";
-import sanitizeHtml from "sanitize-html";
+import type { Metadata } from "next";
 import Image from "next/image";
+import sanitizeHtml from "sanitize-html";
+
 import RouterButton from "@/components/shared/router-button";
 import { cn } from "@/lib/utils";
+import { getBrand, getBrandMarkSources } from "@/server/queries";
 
-export default async function BrandPage({
-  params: { id },
-}: {
+type BrandPageProps = {
   params: { id: string };
-}) {
+};
+
+export async function generateMetadata({
+  params: { id },
+}: BrandPageProps): Promise<Metadata> {
+  const brand = await getBrand({ id });
+  return {
+    title: brand?.name ?? "Unknown brand",
+  };
+}
+
+export default async function BrandPage({ params: { id } }: BrandPageProps) {
   const brand = await getBrand({ id });
   return (
-    <div>
+    <>
       <Header />
 
       <Content brand={brand} />
-    </div>
+    </>
   );
 }
 
