@@ -19,6 +19,7 @@ import { UploadButton } from "@/lib/uploadthings";
 import {
   getBrandsAction,
   getLocationsAction,
+  patchBrandAction,
   postBrandAction,
 } from "@/server/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,39 +42,57 @@ type FormSchemaData = z.infer<typeof FormSchema>;
 
 export default function BrandFormPage({
   defaultValues,
-  edit,
+  editId,
 }: {
   defaultValues?: z.infer<typeof FormSchema>;
-  edit?: boolean;
+  editId?: string;
 }) {
   const form = useForm<FormSchemaData>({
     resolver: zodResolver(FormSchema),
     defaultValues: defaultValues,
   });
 
-  const handleSubmit = form.handleSubmit(data => {
+  const edit = !!editId;
+
+  const getPayloadFromData = (data: FormSchemaData) => {
+    return {
+      imageUrl: data.imageUrl ?? "",
+      name: data.name ?? "",
+      price: data.price ?? 0,
+      marked: data?.marked ? +data.marked : 0,
+      mark_reason: data.markReason ?? "",
+      location: data.location?.value
+        ? {
+            id: data.location?.value,
+          }
+        : undefined,
+      owned_by: data.ownedBy?.value
+        ? {
+            id: data.ownedBy.value,
+          }
+        : undefined,
+    };
+  };
+
+  const handleSubmit = form.handleSubmit(async data => {
     if (edit) {
+      await patchBrandAction({
+        id: editId,
+        ...getPayloadFromData(data),
+      });
+
+      toast({
+        variant: "default",
+
+        title: "Sukses!",
+        description: "Brand berhasil diubah",
+      });
     } else {
-      postBrandAction({
-        imageUrl: data.imageUrl ?? "",
-        name: data.name ?? "",
-        price: data.price ?? 0,
-        marked: data?.marked ? +data.marked : 0,
-        mark_reason: data.markReason ?? "",
-        location: data.location
-          ? {
-              id: data.location?.value,
-            }
-          : undefined,
-        owned_by: data.ownedBy?.value
-          ? {
-              id: data.ownedBy.value,
-            }
-          : undefined,
-      }).then(() => {
-        toast({
-          title: "Brand berhasil ditambahkan",
-        });
+      await postBrandAction(getPayloadFromData(data));
+      toast({
+        variant: "default",
+        title: "Sukses!",
+        description: "Brand berhasil ditambahkan",
       });
     }
   });
@@ -211,18 +230,21 @@ function LocationCombobox({
     fetchData(debouncedInputValue);
   }, [debouncedInputValue, fetchData]);
 
+  console.log(field.value, "TEST");
   return (
     <FormItem>
       <FormLabel className="block">Lokasi</FormLabel>
       <Combobox
         async
         inputValue={inputValue}
-        onCreate={value =>
+        onChange={value =>
           field.onChange({
-            label: value,
-            value: "__new__",
+            label: value?.label ?? "",
+            value: value?.value ?? "",
           })
         }
+        value={field.value}
+        clearable
         options={options}
         setInputValue={value => setInputValue(value)}
       />
@@ -265,14 +287,17 @@ function OwnerBrandCombobox({
     <FormItem>
       <FormLabel className="block">Pemilik brand</FormLabel>
       <Combobox
-        async
-        inputValue={inputValue}
-        onCreate={value =>
+        creatable
+        onChange={value =>
           field.onChange({
-            label: value,
-            value: "__new__",
+            label: value?.label ?? "",
+            value: value?.value ?? "",
           })
         }
+        value={field.value}
+        async
+        inputValue={inputValue}
+        clearable
         options={options}
         setInputValue={value => setInputValue(value)}
       />

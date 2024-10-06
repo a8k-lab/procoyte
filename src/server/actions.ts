@@ -1,8 +1,10 @@
 "use server";
 import {
+  type PatchBrandParams,
   type PostBrandParams,
   getBrands,
   getLocations,
+  patchBrand,
   postBrand,
 } from "./queries";
 
@@ -50,4 +52,8 @@ export async function postBrandAction({
     mark_reason,
     owned_by,
   });
+}
+
+export async function patchBrandAction(params: PatchBrandParams) {
+  return patchBrand(params);
 }

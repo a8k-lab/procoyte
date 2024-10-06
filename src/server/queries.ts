@@ -139,3 +139,29 @@ export async function postBrand({
   });
   return brand;
 }
+
+export type PatchBrandParams = Partial<EditableData<BrandsRecord>> &
+  Identifiable;
+
+export async function patchBrand({
+  id,
+  name,
+  price,
+  marked,
+  imageUrl,
+  location,
+  mark_reason,
+  owned_by,
+}: PatchBrandParams) {
+  const brand = await db.brands.updateOrThrow({
+    id,
+    name,
+    price,
+    marked,
+    imageUrl,
+    location,
+    mark_reason,
+    owned_by,
+  });
+  return brand;
+}
