@@ -1,0 +1,19 @@
+{
+  "id": "mig_cs234t7tni63c332rbk0",
+  "parentID": "mig_cs234ovtni63c332rbj0",
+  "checksum": "1:301950207760417c9516a49207e123a86fe13d3d06315caab88887faaf0adac4",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "tag",
+          "type": "link",
+          "link": {
+            "table": "tags"
+          }
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}
