@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   },
   description:
     "Cek status boikot produk secara cepat dan mudah. Masukkan tautan atau nama produk untuk melihat apakah masuk daftar boikot terbaru. Dukung kampanye global dan temukan alternatif yang direkomendasikan.",
+  openGraph: {
+    images: ["/images/og.png"],
+  },
   icons: [
     {
       rel: "icon",
