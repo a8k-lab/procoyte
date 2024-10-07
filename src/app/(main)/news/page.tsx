@@ -43,7 +43,7 @@ const NewBrandsToBoycott = async () => {
           <Link key={brand.id} href={`/brands/${brand.id}`}>
             <BrandCard
               name={brand.name}
-              description={brand.tag}
+              description={brand.tag?.name ?? "-"}
               imageUrl={brand.imageUrl}
             />
           </Link>

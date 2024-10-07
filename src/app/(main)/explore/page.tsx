@@ -1,4 +1,3 @@
-import type { BrandsRecord } from "@/xata";
 import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -7,6 +6,7 @@ import BrandCard from "@/components/shared/card/brand";
 import { SearchInput } from "@/components/shared/search-input";
 import { Button } from "@/components/ui/button";
 import { getBrands } from "@/server/queries";
+import type { BrandsRecord } from "@/xata";
 
 export const metadata: Metadata = {
   title: "Produk & Brand",
@@ -42,7 +42,7 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
       {searchedBrands.length > 0 && brands.length < 1 ? (
         <BrandNotFound keyword={searchedBrands} />
       ) : (
-        <BrandsSearch brands={brands as BrandsRecord[]} />
+        <BrandsSearch brands={brands} />
       )}
     </>
   );
@@ -63,7 +63,7 @@ const BrandsSearch = ({ brands }: { brands: BrandsRecord[] }) => {
         <Link key={brand.id} href={`/brands/${brand.id}`}>
           <BrandCard
             name={brand.name}
-            description={"-"}
+            description={brand.tag?.name ?? "-"}
             imageUrl={brand.imageUrl}
           />
         </Link>
