@@ -1,17 +1,27 @@
+import type { BrandsRecord } from "@/xata";
 import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 import BrandCard from "@/components/shared/card/brand";
+import { SearchInput } from "@/components/shared/search-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { getBrands } from "@/server/queries";
 
 export const metadata: Metadata = {
   title: "Produk & Brand",
 };
 
-export default function ExplorePage() {
+type ExplorePageProps = {
+  searchParams: {
+    q: string;
+  };
+};
+
+export default async function ExplorePage({ searchParams }: ExplorePageProps) {
+  const brands = await getBrands({ size: 4, search: searchParams?.q || "" });
+  const searchedBrands = searchParams.q || "";
+
   return (
     <>
       <section>
@@ -27,26 +37,33 @@ export default function ExplorePage() {
 
       <BrandNotRegistered />
 
-      <Input
-        suffixIcon={<Icon icon="carbon:search" className="size-4" />}
-        placeholder="Masukkan nama brand"
-        className="mt-3"
-      />
+      <SearchInput placeholder="Masukkan nama brand" />
 
-      <BrandsSearch />
+      {searchedBrands.length > 0 && brands.length < 1 ? (
+        <BrandNotFound keyword={searchedBrands} />
+      ) : (
+        <BrandsSearch brands={brands as BrandsRecord[]} />
+      )}
     </>
   );
 }
 
-const BrandsSearch = async () => {
-  const brands = await getBrands({ size: 4 });
+const BrandNotFound = ({ keyword }: { keyword: string }) => {
+  return (
+    <p className="mt-8 text-muted-foreground">
+      Tidak ditemukan brand dengan keyword "{keyword}"
+    </p>
+  );
+};
+
+const BrandsSearch = ({ brands }: { brands: BrandsRecord[] }) => {
   return (
     <section className="mt-3 grid grid-cols-2 gap-3">
       {brands.map(brand => (
         <Link key={brand.id} href={`/brands/${brand.id}`}>
           <BrandCard
             name={brand.name}
-            description={brand.tag}
+            description={"-"}
             imageUrl={brand.imageUrl}
           />
         </Link>
@@ -57,7 +74,7 @@ const BrandsSearch = async () => {
 
 const BrandNotRegistered = () => {
   return (
-    <section className="mt-3 p-4 block border border-border rounded-md text-center bg-white">
+    <section className="my-3 p-4 block border border-border rounded-md text-center bg-white">
       <h2 className="text-lg font-semibold text-text-primary">
         Produk tidak terdaftar?
       </h2>
