@@ -21,6 +21,7 @@ export async function getBrands({
       "imageUrl",
       "price",
       "marked",
+      "tag.*",
       "owned_by.*",
       "location.*",
     ])
@@ -41,9 +42,7 @@ export async function getBrands({
       },
     });
 
-  return JSON.parse(JSON.stringify(brands)) as Awaited<
-    ReturnType<typeof db.brands.getMany>
-  >;
+  return JSON.parse(JSON.stringify(brands)) as Awaited<BrandsRecord[]>;
 }
 
 export async function getBrand({ id }: { id: string }) {
