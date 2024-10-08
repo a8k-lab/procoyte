@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import BrandCard from "@/components/shared/card/brand";
+import { BrandCard } from "@/components/shared/card/brand";
 import { getBrands } from "@/server/queries";
 
 export default async function SearchPage({

@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import BrandCard from "@/components/shared/card/brand";
+import { BrandCard } from "@/components/shared/card/brand";
 import { NewsCard } from "@/components/shared/card/news";
 import { getBrands } from "@/server/queries";
 
