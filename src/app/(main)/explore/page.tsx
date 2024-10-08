@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import BrandCard from "@/components/shared/card/brand";
+import { BrandCard } from "@/components/shared/card/brand";
 import { SearchInput } from "@/components/shared/search-input";
 import { Button } from "@/components/ui/button";
 import { getBrands } from "@/server/queries";
@@ -19,7 +19,10 @@ type ExplorePageProps = {
 };
 
 export default async function ExplorePage({ searchParams }: ExplorePageProps) {
-  const brands = await getBrands({ size: 4, search: searchParams?.q || "" });
+  const brands = await getBrands({
+    isMarked: true,
+    search: searchParams?.q || "",
+  });
   const searchedBrands = searchParams.q || "";
 
   return (
@@ -50,9 +53,9 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
 
 const BrandNotFound = ({ keyword }: { keyword: string }) => {
   return (
-    <p className="mt-8 text-muted-foreground">
-      Tidak ditemukan brand dengan keyword "{keyword}"
-    </p>
+    <section className="mt-8 text-muted-foreground text-balance">
+      <p>Tidak ditemukan pencarian untuk "{keyword}"</p>
+    </section>
   );
 };
 
