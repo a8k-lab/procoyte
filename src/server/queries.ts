@@ -10,9 +10,11 @@ import type {
 export async function getBrands({
   size = 4,
   search,
+  isMarked,
   offset,
 }: {
   search?: string;
+  isMarked?: boolean;
 } & OffsetNavigationOptions = {}) {
   const brands = await db.brands
     .select([
@@ -35,6 +37,7 @@ export async function getBrands({
           name: {
             $iContains: search,
           },
+          marked: isMarked ? 1 : 0,
         },
       },
       sort: {
