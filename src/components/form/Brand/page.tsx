@@ -1,5 +1,8 @@
 "use client";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
+import { useDebounceValue } from "usehooks-ts";
 
 import TextEditor from "@/components/shared/text-editor";
 import { Button } from "@/components/ui/button";
@@ -15,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/hooks/use-toast";
+import { type AdminBrandSchema, adminBrandSchema } from "@/lib/schema";
 import { UploadButton } from "@/lib/uploadthings";
 import {
   getBrandsAction,
@@ -23,38 +27,22 @@ import {
   postBrandAction,
 } from "@/server/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
-import { useDebounceValue } from "usehooks-ts";
-import { z } from "zod";
-
-const FormSchema = z.object({
-  name: z.string().min(1).optional(),
-  price: z.number().min(0).max(5).optional(),
-  marked: z.enum(["0", "1"]).optional(),
-  imageUrl: z.string().optional(),
-  location: z.object({ value: z.string(), label: z.string() }).optional(),
-  markReason: z.string().optional(),
-  ownedBy: z.object({ value: z.string(), label: z.string() }).optional(),
-});
-
-type FormSchemaData = z.infer<typeof FormSchema>;
 
 export default function BrandFormPage({
   defaultValues,
   editId,
 }: {
-  defaultValues?: z.infer<typeof FormSchema>;
+  defaultValues?: AdminBrandSchema;
   editId?: string;
 }) {
-  const form = useForm<FormSchemaData>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<AdminBrandSchema>({
+    resolver: zodResolver(adminBrandSchema),
     defaultValues: defaultValues,
   });
 
   const edit = !!editId;
 
-  const getPayloadFromData = (data: FormSchemaData) => {
+  const getPayloadFromData = (data: AdminBrandSchema) => {
     return {
       imageUrl: data.imageUrl ?? "",
       name: data.name ?? "",
@@ -202,7 +190,7 @@ export default function BrandFormPage({
 function LocationCombobox({
   field,
 }: {
-  field: ControllerRenderProps<FormSchemaData, "location">;
+  field: ControllerRenderProps<AdminBrandSchema, "location">;
 }) {
   const [inputValue, setInputValue] = useState("");
 
@@ -255,7 +243,7 @@ function LocationCombobox({
 function OwnerBrandCombobox({
   field,
 }: {
-  field: ControllerRenderProps<FormSchemaData, "ownedBy">;
+  field: ControllerRenderProps<AdminBrandSchema, "ownedBy">;
 }) {
   const [inputValue, setInputValue] = useState("");
 
@@ -308,7 +296,7 @@ function OwnerBrandCombobox({
 function ImageUpload({
   field,
 }: {
-  field: ControllerRenderProps<FormSchemaData, "imageUrl">;
+  field: ControllerRenderProps<AdminBrandSchema, "imageUrl">;
 }) {
   return (
     <FormItem>
