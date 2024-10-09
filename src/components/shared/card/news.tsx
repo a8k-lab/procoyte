@@ -14,8 +14,8 @@ export const NewsCard = ({
   date,
 }: NewsCardProps) => {
   return (
-    <article className="flex size-full bg-white overflow-hidden border rounded-xl">
-      <div className="w-[120px] relative overflow-hidden">
+    <article className="flex justify-between size-full bg-white overflow-hidden border rounded-xl">
+      <div className="w-[120px] md:w-1/3 relative overflow-hidden">
         <Image src={imageUrl} alt={title} className="object-cover" fill />
       </div>
 
