@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { ReportForm } from "@/components/form/report";
 
 export const metadata: Metadata = {
-  title: "Laporkan Produk",
+  title: "Laporkan Brand atau Produk",
 };
 
 export default function ReportPage() {

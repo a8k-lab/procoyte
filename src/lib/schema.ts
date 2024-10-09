@@ -11,11 +11,22 @@ export const adminBrandSchema = z.object({
 });
 
 export const reportSchema = z.object({
-  name: z.string().min(1),
+  name: z
+    .string({ required_error: "Nama Brand atau Produk harus diisi" })
+    .min(2, {
+      message: "Minimal 2 karakter",
+    }),
   purpose: z.enum(["0", "1"]),
   imageUrl: z.string().optional(),
-  reason: z.string(),
-  proofUrl: z.string().url(),
+  reason: z.string({ required_error: "Penjelasan Lapor harus diisi" }).min(5, {
+    message: "Minimal 5 karakter",
+  }),
+  proofUrl: z
+    .string({
+      required_error: "URL Bukti harus diisi",
+      invalid_type_error: "URL Bukti harus berupa link yang valid",
+    })
+    .url(),
   alternative: z.string().optional(),
 });
 
