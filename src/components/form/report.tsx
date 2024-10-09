@@ -13,8 +13,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { type ReportSchema, reportSchema } from "@/lib/schema";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 export const ReportForm = () => {
   const form = useForm<ReportSchema>({
@@ -32,7 +32,7 @@ export const ReportForm = () => {
   const onSubmit = (values: ReportSchema) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    console.log("submitted:", values);
   };
 
   return (
@@ -46,7 +46,7 @@ export const ReportForm = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nama</FormLabel>
+              <FormLabel isRequired>Nama</FormLabel>
               <Input {...field} placeholder="Masukkan nama Brand atau Produk" />
               <FormMessage />
             </FormItem>
@@ -58,7 +58,7 @@ export const ReportForm = () => {
           name="purpose"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tujuan Lapor</FormLabel>
+              <FormLabel isRequired>Tujuan Lapor</FormLabel>
               {/* Radio */}
               <FormControl>
                 <RadioGroup
@@ -91,7 +91,60 @@ export const ReportForm = () => {
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="imageUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Gambar/Logo</FormLabel>
+              <Input {...field} type="file" />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="reason"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel isRequired>Komentar/Penjelasan</FormLabel>
+              <Input {...field} placeholder="Masukkan Penjelasan" />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="proofUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel isRequired>Link Bukti</FormLabel>
+              <Input {...field} placeholder="Masukkan Bukti" />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="alternative"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Alternative</FormLabel>
+              <Input
+                {...field}
+                placeholder="Masukkan Brand atau Produk alternative"
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="w-full">
+          Submit
+        </Button>
       </form>
     </Form>
   );
