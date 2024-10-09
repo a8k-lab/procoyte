@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { BrandCard } from "@/components/shared/card/brand";
 import { SearchInput } from "@/components/shared/search-input";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/button";
 import { getBrands } from "@/server/queries";
 import type { BrandsRecord } from "@/xata";
 
@@ -84,10 +84,14 @@ const BrandNotRegistered = () => {
       <p className="mt-[2px] text-xs text-muted-foreground">
         Laporkan produk untuk kami analisis lebih dalam
       </p>
-      <Button variant="outline" className="mt-3 gap-2 text-error">
+      <LinkButton
+        href="/report"
+        variant="outline"
+        className="mt-3 gap-2 text-error"
+      >
         <Icon icon="lucide:badge-check" className="size-4" />
         Laporkan Produk
-      </Button>
+      </LinkButton>
     </section>
   );
 };

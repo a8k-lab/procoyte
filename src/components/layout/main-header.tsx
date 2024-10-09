@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/button";
 import { headerLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -51,10 +51,10 @@ export const MainHeader = ({
       <div className="flex items-center gap-4">
         <SignedOut>
           <SignInButton>
-            <Button>
-              <Icon icon="lucide:badge-check" className="size-4" />
+            <LinkButton href="/login">
+              <Icon icon="material-symbols:login" className="size-4" />
               Login
-            </Button>
+            </LinkButton>
           </SignInButton>
         </SignedOut>
         <SignedIn>
