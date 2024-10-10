@@ -1,5 +1,5 @@
 import BrandFormPage from "@/components/form/Brand/page";
-import { getBrand } from "@/server/queries";
+import { getBrand, getBrandTags } from "@/server/queries";
 
 export default async function AdminBrandPage({
   params,
@@ -7,7 +7,7 @@ export default async function AdminBrandPage({
   params: { id: string };
 }) {
   const brand = await getBrand({ id: params.id });
-  console.log(brand);
+  const tags = await getBrandTags({ id: params.id });
   return (
     <div className="p-4 bg-white rounded text-left">
       <BrandFormPage
@@ -30,6 +30,10 @@ export default async function AdminBrandPage({
                 label: brand?.owned_by?.name || "",
               }
             : undefined,
+          tags: tags.map(tag => ({
+            value: tag?.tag?.id ?? "",
+            label: tag?.tag?.name ?? "",
+          })),
         }}
       />
     </div>

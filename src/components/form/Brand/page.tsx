@@ -14,13 +14,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import SelectBox from "@/components/ui/selectbox";
 import { toast } from "@/hooks/use-toast";
 import { UploadButton } from "@/lib/uploadthings";
 import {
   getBrandsAction,
   getLocationsAction,
+  getTagsAction,
   patchBrandAction,
   postBrandAction,
+  postTagAction,
+  replaceTagsAction,
 } from "@/server/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -36,6 +40,14 @@ const FormSchema = z.object({
   location: z.object({ value: z.string(), label: z.string() }).optional(),
   markReason: z.string().optional(),
   ownedBy: z.object({ value: z.string(), label: z.string() }).optional(),
+  tags: z
+    .array(
+      z.object({
+        value: z.string(),
+        label: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 type FormSchemaData = z.infer<typeof FormSchema>;
@@ -53,32 +65,81 @@ export default function BrandFormPage({
   });
 
   const edit = !!editId;
+  async function getLocationPayloadFromData(data: FormSchemaData) {
+    if (!data?.location?.value) return undefined;
+    if (data?.location?.value === "__new__") {
+      const resp = await postTagAction({
+        name: data.location?.label ?? "",
+      });
+      return {
+        id: resp.id,
+        name: resp.name,
+      };
+    }
 
-  const getPayloadFromData = (data: FormSchemaData) => {
+    return {
+      id: data.location?.value,
+    };
+  }
+
+  async function getTagPayloadFromData(data: FormSchemaData) {
+    if (data?.tags?.length === 0) {
+      return [];
+    }
+
+    const tagsPayload: {
+      label: string;
+      value: string;
+    }[] = [];
+
+    for (const tag of data?.tags ?? []) {
+      if (tag.value === "__new__") {
+        const resp = await postTagAction({
+          name: tag.label ?? "",
+        });
+
+        tagsPayload.push({
+          value: resp.id,
+          label: resp.name ?? "-",
+        });
+      } else {
+        tagsPayload.push({
+          value: tag.value,
+          label: tag.label,
+        });
+      }
+    }
+
+    return tagsPayload;
+  }
+
+  async function getPayloadFromData(data: FormSchemaData) {
     return {
       imageUrl: data.imageUrl ?? "",
       name: data.name ?? "",
       price: data.price ?? 0,
       marked: data?.marked ? +data.marked : 0,
       mark_reason: data.markReason ?? "",
-      location: data.location?.value
-        ? {
-            id: data.location?.value,
-          }
-        : undefined,
+      location: await getLocationPayloadFromData(data),
       owned_by: data.ownedBy?.value
         ? {
             id: data.ownedBy.value,
           }
         : undefined,
     };
-  };
+  }
 
   const handleSubmit = form.handleSubmit(async data => {
     if (edit) {
-      await patchBrandAction({
+      const res = await patchBrandAction({
         id: editId,
         ...getPayloadFromData(data),
+      });
+
+      const tagsPayload = await getTagPayloadFromData(data);
+      await replaceTagsAction({
+        brandId: res?.id,
+        tagIds: tagsPayload?.map(tag => tag.value) ?? [],
       });
 
       toast({
@@ -88,7 +149,14 @@ export default function BrandFormPage({
         description: "Brand berhasil diubah",
       });
     } else {
-      await postBrandAction(getPayloadFromData(data));
+      const payload = await getPayloadFromData(data);
+      const res = await postBrandAction(payload);
+
+      const tagsPayload = await getTagPayloadFromData(data);
+      await replaceTagsAction({
+        brandId: res?.id,
+        tagIds: tagsPayload?.map(tag => tag.value) ?? [],
+      });
       toast({
         variant: "default",
         title: "Sukses!",
@@ -191,6 +259,12 @@ export default function BrandFormPage({
           render={({ field }) => <OwnerBrandCombobox field={field} />}
         />
 
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => <Tags field={field} />}
+        />
+
         <Button className="ml-auto" type="submit">
           Simpan
         </Button>
@@ -230,7 +304,6 @@ function LocationCombobox({
     fetchData(debouncedInputValue);
   }, [debouncedInputValue, fetchData]);
 
-  console.log(field.value, "TEST");
   return (
     <FormItem>
       <FormLabel className="block">Lokasi</FormLabel>
@@ -328,6 +401,53 @@ function ImageUpload({
           endpoint="imageUploader"
         />
       </div>
+    </FormItem>
+  );
+}
+
+function Tags({
+  field,
+}: { field: ControllerRenderProps<FormSchemaData, "tags"> }) {
+  const [options, setOptions] = useState<{ value: string; label: string }[]>(
+    [],
+  );
+
+  const fetchData = useCallback(async (inputValue: string) => {
+    const response = await getTagsAction({
+      size: 10,
+      search: inputValue,
+    });
+
+    setOptions(
+      response.map(tag => ({
+        value: tag.id ?? "",
+        label: tag.name ?? "",
+      })),
+    );
+  }, []);
+
+  const [inputValue, setInputValue] = useState("");
+
+  const [debouncedInputValue] = useDebounceValue(inputValue, 500);
+
+  useEffect(() => {
+    fetchData(debouncedInputValue);
+  }, [debouncedInputValue, fetchData]);
+
+  return (
+    <FormItem>
+      <FormLabel className="block">Tags</FormLabel>
+
+      <SelectBox
+        searchTerm={inputValue}
+        setSearchTerm={setInputValue}
+        options={options}
+        value={field.value}
+        onChange={value => {
+          field.onChange(value);
+        }}
+        creatable
+      />
     </FormItem>
   );
 }

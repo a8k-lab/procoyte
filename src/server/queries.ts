@@ -165,3 +165,103 @@ export async function patchBrand({
   });
   return brand;
 }
+
+export async function getTags({
+  size = 10,
+  search,
+}: {
+  size?: number;
+  search?: string;
+}) {
+  const tags = await db.tags.getMany({
+    pagination: {
+      size,
+    },
+    filter: {
+      $all: {
+        name: {
+          $iContains: search,
+        },
+      },
+    },
+  });
+
+  return JSON.parse(JSON.stringify(tags)) as Awaited<
+    ReturnType<typeof db.tags.getMany>
+  >;
+}
+
+export async function postLocation({
+  name,
+}: {
+  name: string;
+}) {
+  const location = await db.locations.create({
+    name,
+  });
+  return location;
+}
+
+export async function replaceTags({
+  brandId,
+  tagIds,
+}: {
+  brandId: string;
+  tagIds: string[];
+}) {
+  const tagsWithMatchingBrandId = await db.brands_tags.getAll({
+    filter: {
+      brand: {
+        id: brandId,
+      },
+      tag: {
+        id: {
+          $any: tagIds,
+        },
+      },
+    },
+  });
+
+  const tagsToDelete = tagsWithMatchingBrandId.filter(
+    tag => !tagIds.includes(tag?.tag?.id ?? ""),
+  );
+
+  console.log(tagsToDelete, tagsWithMatchingBrandId, brandId);
+
+  await db.brands_tags.delete(tagsToDelete);
+
+  const tagsToCreate = tagIds.filter(
+    tagId => !tagsWithMatchingBrandId.find(tag => tag.tag?.id === tagId),
+  );
+
+  console.log(tagsToCreate, tagsWithMatchingBrandId, brandId);
+
+  await db.brands_tags.create(
+    tagsToCreate.map(tagId => ({
+      brand: {
+        id: brandId,
+      },
+      tag: {
+        id: tagId,
+      },
+    })),
+  );
+}
+
+export async function getBrandTags({
+  id,
+}: {
+  id: string;
+}) {
+  const tags = await db.brands_tags.select(["id", "brand.*", "tag.*"]).getAll({
+    filter: {
+      brand: {
+        id,
+      },
+    },
+  });
+
+  return JSON.parse(JSON.stringify(tags)) as Awaited<
+    ReturnType<typeof db.brands_tags.getAll>
+  >;
+}
