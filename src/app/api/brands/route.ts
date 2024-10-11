@@ -6,6 +6,7 @@ type DedupedBrand = {
   price: number;
   tag: string;
   boosted: boolean;
+  imageUrl: string;
   tags: {
     tag_id: string;
     tag_name: string;
@@ -26,6 +27,7 @@ export async function GET(req: Request) {
       "tags.name as tag_name",
       "price",
       "brands.boosted as boosted",
+      "brands.imageUrl",
     ])
     .limit(1000);
 
@@ -51,6 +53,7 @@ export async function GET(req: Request) {
         price: brand.price || 0,
         tag: brand.tag_name || "",
         boosted: brand.boosted || false,
+        imageUrl: brand.imageUrl || "",
         tags: brand.tag_id
           ? [
               {
