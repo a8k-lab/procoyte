@@ -8,6 +8,14 @@ export const adminBrandSchema = z.object({
   location: z.object({ value: z.string(), label: z.string() }).optional(),
   markReason: z.string().optional(),
   ownedBy: z.object({ value: z.string(), label: z.string() }).optional(),
+  tags: z
+    .array(
+      z.object({
+        value: z.string(),
+        label: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 export const reportSchema = z.object({

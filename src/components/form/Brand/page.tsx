@@ -31,27 +31,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
-import { z } from "zod";
-
-const FormSchema = z.object({
-  name: z.string().min(1).optional(),
-  price: z.number().min(0).max(5).optional(),
-  marked: z.enum(["0", "1"]).optional(),
-  imageUrl: z.string().optional(),
-  location: z.object({ value: z.string(), label: z.string() }).optional(),
-  markReason: z.string().optional(),
-  ownedBy: z.object({ value: z.string(), label: z.string() }).optional(),
-  tags: z
-    .array(
-      z.object({
-        value: z.string(),
-        label: z.string(),
-      }),
-    )
-    .optional(),
-});
-
-type FormSchemaData = z.infer<typeof FormSchema>;
 
 export default function BrandFormPage({
   defaultValues,
@@ -66,7 +45,7 @@ export default function BrandFormPage({
   });
 
   const edit = !!editId;
-  async function getLocationPayloadFromData(data: FormSchemaData) {
+  async function getLocationPayloadFromData(data: AdminBrandSchema) {
     if (!data?.location?.value) return undefined;
     if (data?.location?.value === "__new__") {
       const resp = await postTagAction({
@@ -83,7 +62,7 @@ export default function BrandFormPage({
     };
   }
 
-  async function getTagPayloadFromData(data: FormSchemaData) {
+  async function getTagPayloadFromData(data: AdminBrandSchema) {
     if (data?.tags?.length === 0) {
       return [];
     }
@@ -114,7 +93,7 @@ export default function BrandFormPage({
     return tagsPayload;
   }
 
-  async function getPayloadFromData(data: FormSchemaData) {
+  async function getPayloadFromData(data: AdminBrandSchema) {
     return {
       imageUrl: data.imageUrl ?? "",
       name: data.name ?? "",
@@ -408,7 +387,7 @@ function ImageUpload({
 
 function Tags({
   field,
-}: { field: ControllerRenderProps<FormSchemaData, "tags"> }) {
+}: { field: ControllerRenderProps<AdminBrandSchema, "tags"> }) {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     [],
   );
