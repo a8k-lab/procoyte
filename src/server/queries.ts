@@ -263,7 +263,5 @@ export async function getBrandTags({
     },
   });
 
-  return JSON.parse(JSON.stringify(tags)) as Awaited<
-    ReturnType<typeof db.brands_tags.getAll>
-  >;
+  return JSON.parse(JSON.stringify(tags)) as typeof tags;
 }
