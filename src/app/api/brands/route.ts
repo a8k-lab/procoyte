@@ -5,6 +5,7 @@ type DedupedBrand = {
   name: string;
   price: number;
   tag: string;
+  boosted: boolean;
   tags: {
     tag_id: string;
     tag_name: string;
@@ -16,14 +17,15 @@ export async function GET(req: Request) {
   const unmarkedOnly = url.get("unmarked_only") === "true";
   const brandQuery = dbKys
     .selectFrom("brands")
-    .leftJoin("brands_tags", "brands.id", "brands_tags.brand")
-    .leftJoin("tags", "tags.id", "brands_tags.tag")
+    .innerJoin("brands_tags", "brands.id", "brands_tags.brand")
+    .innerJoin("tags", "tags.id", "brands_tags.tag")
     .select([
       "brands.id as brand_id",
       "brands.name as brand_name",
       "tags.id as tag_id",
       "tags.name as tag_name",
       "price",
+      "brands.boosted as boosted",
     ])
     .limit(1000);
 
@@ -48,6 +50,7 @@ export async function GET(req: Request) {
         name: brand.brand_name ?? "",
         price: brand.price || 0,
         tag: brand.tag_name || "",
+        boosted: brand.boosted || false,
         tags: brand.tag_id
           ? [
               {

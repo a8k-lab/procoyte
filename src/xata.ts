@@ -10,7 +10,10 @@ const tables = [
   {
     name: "tags",
     columns: [{ name: "name", type: "text" }],
-    revLinks: [{ column: "tag", table: "brands_tags" }],
+    revLinks: [
+      { column: "tag", table: "brands_tags" },
+      { column: "tag", table: "brands" },
+    ],
   },
   {
     name: "brands",
@@ -22,6 +25,8 @@ const tables = [
       { name: "mark_reason", type: "text" },
       { name: "location", type: "link", link: { table: "locations" } },
       { name: "owned_by", type: "link", link: { table: "brands" } },
+      { name: "tag", type: "link", link: { table: "tags" } },
+      { name: "boosted", type: "bool", notNull: true, defaultValue: "false" },
     ],
     revLinks: [
       { column: "brand", table: "mark_sources" },

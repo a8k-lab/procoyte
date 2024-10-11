@@ -1,0 +1,18 @@
+{
+  "id": "mig_cs432571uhulgm2ppl70",
+  "parentID": "mig_cs234t7tni63c332rbk0",
+  "checksum": "1:0426e6c336157c20ea1df19c62089047fc4dce8eee5bab72e0a117ec14a5ea6c",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "boosted",
+          "type": "bool",
+          "notNull": true,
+          "defaultValue": "false"
+        },
+        "table": "brands_tags"
+      }
+    }
+  ]
+}
