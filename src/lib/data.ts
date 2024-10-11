@@ -22,11 +22,11 @@ export const bottomNavLinks = [
 export const faqs = [
   {
     q: "Apa itu Procoyte?",
-    a: "...",
+    a: "Procoyte adalah platform untuk mengecek dan melaporkan status boikot terhadap suatu produk atau brand.",
   },
   {
     q: "Bagaimana saya melapor brand atau produk?",
-    a: "...",
+    a: "Kamu bisa melaporkan produk atau brand melalui form yang ada di halaman Report.",
   },
   {
     q: "Apakah brand yang ada didalam Procoyte dapat berubah?",

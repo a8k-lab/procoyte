@@ -1,4 +1,7 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
+
 import {
   Table,
   TableBody,
@@ -8,15 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { showPrice } from "@/lib/utils";
-import type { getBrands } from "@/server/queries";
-import Image from "next/image";
-import Link from "next/link";
+import type { BrandsRecord } from "@/xata";
 import Pagination from "./pagination";
 
 export default function BrandTable({
   brands,
 }: {
-  brands: Awaited<ReturnType<typeof getBrands>>;
+  brands: BrandsRecord[];
 }) {
   return (
     <Table>

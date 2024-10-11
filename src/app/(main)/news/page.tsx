@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import BrandCard from "@/components/shared/card/brand";
+import { BrandCard } from "@/components/shared/card/brand";
 import { NewsCard } from "@/components/shared/card/news";
 import { getBrands } from "@/server/queries";
 
@@ -32,7 +32,7 @@ export default function NewsPage() {
 }
 
 const NewBrandsToBoycott = async () => {
-  const brands = await getBrands({ size: 2 });
+  const brands = await getBrands({ size: 2, isMarked: true });
   return (
     <section className="mt-4 text-left">
       <h1 className="text-lg font-semibold">Baru Diboikot</h1>
@@ -43,7 +43,7 @@ const NewBrandsToBoycott = async () => {
           <Link key={brand.id} href={`/brands/${brand.id}`}>
             <BrandCard
               name={brand.name}
-              description={brand.tag}
+              description={brand.tag?.name ?? "-"}
               imageUrl={brand.imageUrl}
             />
           </Link>
@@ -59,15 +59,7 @@ const TodayNews = () => {
       <h1 className="text-lg font-semibold">Berita Hari Ini</h1>
 
       <div className="mt-3 flex flex-col gap-3">
-        <Link href="#">
-          <NewsCard
-            title="Boikot Unilever !?"
-            description="Unilever secara terbuka menegaskan dukungannya terhadap Israel"
-            imageUrl="/images/logo.svg"
-            date="17 Agustus 2024"
-          />
-        </Link>
-        <Link href="#">
+        <Link href="/news/1">
           <NewsCard
             title="Boikot Unilever !?"
             description="Unilever secara terbuka menegaskan dukungannya terhadap Israel"
