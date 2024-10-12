@@ -1,6 +1,11 @@
 import "server-only";
 import { db } from "@/lib/db";
-import type { BrandsRecord, MarkSourcesRecord, TagsRecord } from "@/xata";
+import type {
+  BrandsRecord,
+  MarkSourcesRecord,
+  ReportsRecord,
+  TagsRecord,
+} from "@/xata";
 import type {
   EditableData,
   Identifiable,
@@ -278,4 +283,23 @@ export async function getProductsByBrandId(id: string) {
 export async function getProducts() {
   const products = await db.products.select(["*", "brand.*"]).getAll();
   return JSON.parse(JSON.stringify(products)) as typeof products;
+}
+
+export async function postReport({
+  name,
+  purpose,
+  imageUrl,
+  reason,
+  proofUrl,
+  alternative,
+}: Partial<Omit<ReportsRecord, "id">>) {
+  const report = await db.reports.create({
+    name,
+    purpose,
+    imageUrl,
+    reason,
+    proofUrl,
+    alternative,
+  });
+  return report;
 }
