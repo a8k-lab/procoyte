@@ -13,7 +13,6 @@ type MarkResultCardProps = Partial<
 >;
 
 export const MarkResultCard = (props: MarkResultCardProps) => {
-  console.log("card:", props);
   return (
     <article
       className={cn(
@@ -71,7 +70,7 @@ export const MarkResultCard = (props: MarkResultCardProps) => {
           </div>
 
           <LinkButton
-            href={props?.markedSources?.[0].url ?? "#"}
+            href={props?.markedSources?.[0]?.url || "#"}
             variant="destructive"
             className="mt-6"
           >
