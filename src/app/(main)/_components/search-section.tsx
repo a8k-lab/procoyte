@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import { TextSeparator } from "@/components/shared/text-separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function SearchSection() {
@@ -18,6 +19,15 @@ export default function SearchSection() {
     params.set("q", e.currentTarget.q.value);
 
     replace(`${pathname}?${params.toString()}`);
+  };
+
+  const handleQRClick = () => {
+    // temporary handler
+    toast({
+      variant: "default",
+      title: "Scan QR",
+      description: "Fitur ini masih dalam tahap pengembangan",
+    });
   };
 
   return (
@@ -42,7 +52,7 @@ export default function SearchSection() {
 
           <TextSeparator className="sm:hidden">atau</TextSeparator>
 
-          <Button variant="outline">
+          <Button variant="outline" onClick={handleQRClick}>
             <Icon icon="lucide:badge-check" className="size-4" /> Scan QR
           </Button>
         </div>
