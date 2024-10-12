@@ -1,9 +1,9 @@
 import { ProductCard } from "@/components/shared/card/product";
-import type { BrandsRecord } from "@/xata";
+import type { RecommendationResponse } from "@/lib/type";
 import Link from "next/link";
 
 type RecommendationsSectionProps = {
-  recommendations: BrandsRecord[];
+  recommendations: RecommendationResponse["recommendations"];
 };
 
 export default function RecommendationsSection({

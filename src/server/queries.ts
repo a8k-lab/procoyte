@@ -1,6 +1,5 @@
 import "server-only";
 import { db } from "@/lib/db";
-import type { RecommendationResponse } from "@/lib/type";
 import type { BrandsRecord, MarkSourcesRecord, TagsRecord } from "@/xata";
 import type {
   EditableData,
@@ -268,18 +267,4 @@ export async function getBrandTags({
   });
 
   return JSON.parse(JSON.stringify(tags)) as typeof tags;
-}
-
-export async function getBrandAlternatives({ id }: { id: string }) {
-  // https://fastapi-recommender-system-production.up.railway.app/api/brands/rec_crne26dhjv7fjkdrbl3g?limit=10
-  const alternatives = await fetch(
-    `https://fastapi-recommender-system-production.up.railway.app/api/brands/${id}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  ).then(res => res.json());
-  return alternatives as RecommendationResponse;
 }

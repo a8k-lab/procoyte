@@ -1,11 +1,8 @@
 import { BrandCard } from "@/components/shared/card/brand";
 import RouterButton from "@/components/shared/router-button";
 import { cn } from "@/lib/utils";
-import {
-  getBrand,
-  getBrandAlternatives,
-  getBrandMarkSources,
-} from "@/server/queries";
+import { getBrandRecommendations } from "@/server/api";
+import { getBrand, getBrandMarkSources } from "@/server/queries";
 import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -61,11 +58,13 @@ async function Content({
   const markedSources = brand?.id
     ? await getBrandMarkSources({ id: brand?.id })
     : [];
+
+  console.log(brand.marked);
   return (
     <div
       className={cn(
-        brand?.marked ? "border-error" : "border-secondary",
-        "border rounded-md border-border p-4 text-left bg-white",
+        brand?.marked === 1 ? "border-error" : "border-border",
+        "border rounded-md  p-4 text-left bg-white",
       )}
     >
       {brand?.marked ? (
@@ -140,8 +139,11 @@ async function Alternative({
     id: string;
   };
 }) {
-  const alternativeBrands = await getBrandAlternatives({ id: brand?.id });
+  const alternativeBrands = await getBrandRecommendations({
+    id: brand?.id,
 
+    limit: 6,
+  });
   return (
     <section className="mt-8 text-left">
       <div className="flex items-center justify-between gap-2">
@@ -153,8 +155,8 @@ async function Alternative({
           <Link key={brand.id} href={`/brands/${brand.id}`}>
             <BrandCard
               name={brand.name}
-              description={"-"}
-              imageUrl={brand.imageUrl}
+              description={brand?.location || "-"}
+              imageUrl={brand.imageUrl || ""}
             />
           </Link>
         ))}

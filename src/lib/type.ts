@@ -35,6 +35,7 @@ export interface Top4 {
   name_similarity: number;
   tag_similarity: number;
   similarity_score: number;
+  location: string;
   imageUrl: string;
 }
 

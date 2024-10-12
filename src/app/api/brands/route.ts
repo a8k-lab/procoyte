@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   // brands_tags as junction table
   const url = new URLSearchParams(req.url);
   const unmarkedOnly = url.get("unmarked_only") === "true";
-  const brandQuery = dbKys
+  let brandQuery = dbKys
     .selectFrom("brands")
     .innerJoin("brands_tags", "brands.id", "brands_tags.brand")
     .innerJoin("tags", "tags.id", "brands_tags.tag")
@@ -36,7 +36,7 @@ export async function GET(req: Request) {
     .limit(1000);
 
   if (unmarkedOnly) {
-    brandQuery.where("brands.marked", "==", 0);
+    brandQuery = brandQuery.where("brands.marked", "==", 0);
   }
 
   const brands = await brandQuery.execute();
@@ -44,7 +44,6 @@ export async function GET(req: Request) {
     const existingBrand = acc.find(b => b.id === brand.brand_id);
     if (existingBrand) {
       existingBrand.tag += `,${brand.tag_name}`;
-      ("");
       if (brand.tag_id)
         existingBrand.tags.push({
           tag_id: brand.tag_id ?? "",

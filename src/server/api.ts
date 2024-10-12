@@ -1,11 +1,6 @@
-import type { BrandsRecord } from "@/xata";
+import type { RecommendationResponse } from "@/lib/type";
 
 const recommenderBaseUrl = process.env.RECOMMENDER_API_BASE_URL;
-
-export type Recommendation = {
-  target: BrandsRecord;
-  recommendations: BrandsRecord[];
-};
 
 export async function getBrandRecommendations({
   id,
@@ -24,5 +19,5 @@ export async function getBrandRecommendations({
     throw new Error("Failed to fetch data");
   }
 
-  return res.json() as Promise<Recommendation>;
+  return res.json() as Promise<RecommendationResponse>;
 }

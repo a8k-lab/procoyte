@@ -12,7 +12,7 @@ export const BrandCard = ({ name, description, imageUrl }: BrandCardProps) => {
   return (
     <article className="border rounded-md border-border p-4 text-left bg-white h-full">
       <Image
-        src={imageUrl ?? "/images/logo.svg"}
+        src={imageUrl || "/images/logo.svg"}
         alt={name ?? ""}
         width={48}
         height={48}
