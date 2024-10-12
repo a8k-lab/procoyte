@@ -1,6 +1,6 @@
 export interface RecommendationResponse {
   target: Target;
-  recommendations: Top4[];
+  recommendations: Recommendation[];
 }
 
 export interface Target {

@@ -27,16 +27,7 @@ export async function getBrands({
   }
 
   const brands = await db.brands
-    .select([
-      "id",
-      "name",
-      "imageUrl",
-      "price",
-      "marked",
-      "tag.*",
-      "owned_by.*",
-      "location.*",
-    ])
+    .select(["*", "tag.*", "owned_by.*", "location.*"])
     .getMany({
       pagination: {
         size,
@@ -157,6 +148,8 @@ export async function patchBrand({
   location,
   mark_reason,
   owned_by,
+  brand_description,
+  boosted,
 }: PatchBrandParams) {
   const brand = await db.brands.updateOrThrow({
     id,
@@ -167,6 +160,8 @@ export async function patchBrand({
     location,
     mark_reason,
     owned_by,
+    brand_description,
+    boosted,
   });
   return brand;
 }
@@ -269,12 +264,18 @@ export async function getBrandTags({
   return JSON.parse(JSON.stringify(tags)) as typeof tags;
 }
 
-export function getProductsByBrandId(id: string) {
-  return db.products.select(["*", "brand.*"]).getAll({
+export async function getProductsByBrandId(id: string) {
+  const products = await db.products.select(["*", "brand.*"]).getAll({
     filter: {
       brand: {
         id,
       },
     },
   });
+  return JSON.parse(JSON.stringify(products)) as typeof products;
+}
+
+export async function getProducts() {
+  const products = await db.products.select(["*", "brand.*"]).getAll();
+  return JSON.parse(JSON.stringify(products)) as typeof products;
 }

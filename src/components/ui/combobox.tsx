@@ -63,7 +63,7 @@ export function Combobox({
               placeholder="Search option..."
             />
             <CommandList>
-              {creatable ? (
+              {creatable && inputValue ? (
                 <CommandEmpty
                   onClick={() => {
                     if (creatable) {

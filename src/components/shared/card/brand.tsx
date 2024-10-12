@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import type { BrandsRecord } from "@/xata";
+import Price from "../price";
 
 type BrandCardProps = Partial<
   BrandsRecord & {
@@ -29,7 +30,7 @@ export const BrandCard = ({ name, description, imageUrl }: BrandCardProps) => {
   );
 };
 
-export const BrandStoreCard = ({ name, imageUrl }: BrandsRecord) => {
+export const BrandStoreCard = ({ name, imageUrl, price }: BrandsRecord) => {
   return (
     <article className="group">
       <div className="w-full h-40 bg-white overflow-hidden border rounded-xl">
@@ -44,11 +45,9 @@ export const BrandStoreCard = ({ name, imageUrl }: BrandsRecord) => {
       <div className="mt-4 text-left space-y-1">
         <h1 className="font-semibold">
           {name}{" "}
-          <span className="text-xs text-muted-foreground">(12 products)</span>
+          <span className="text-xs text-muted-foreground">(1 products)</span>
         </h1>
-        <p className="font-medium text-xs text-muted-foreground">
-          Range from Rp. 10.000,00 - Rp. 500.000,00
-        </p>
+        <Price price={price || 0} />
       </div>
     </article>
   );

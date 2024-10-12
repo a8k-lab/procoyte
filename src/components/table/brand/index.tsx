@@ -81,7 +81,9 @@ export default function BrandTable({
         ))}
       </TableBody>
       <TableFooter>
-        <Pagination />
+        <div className="p-3">
+          <Pagination />
+        </div>
       </TableFooter>
     </Table>
   );

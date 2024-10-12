@@ -27,6 +27,7 @@ const tables = [
       { name: "owned_by", type: "link", link: { table: "brands" } },
       { name: "tag", type: "link", link: { table: "tags" } },
       { name: "boosted", type: "bool", notNull: true, defaultValue: "false" },
+      { name: "brand_description", type: "text" },
     ],
     revLinks: [
       { column: "brand", table: "mark_sources" },

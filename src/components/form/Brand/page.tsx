@@ -19,6 +19,8 @@ import { toast } from "@/hooks/use-toast";
 import { type AdminBrandSchema, adminBrandSchema } from "@/lib/schema";
 import { UploadButton } from "@/lib/uploadthings";
 import {
+  generateBrandDescription,
+  generateSummary,
   getBrandsAction,
   getLocationsAction,
   getTagsAction,
@@ -95,6 +97,7 @@ export default function BrandFormPage({
 
   async function getPayloadFromData(data: AdminBrandSchema) {
     return {
+      brand_description: data.brandDescription ?? "",
       imageUrl: data.imageUrl ?? "",
       name: data.name ?? "",
       price: data.price ?? 0,
@@ -105,7 +108,7 @@ export default function BrandFormPage({
         ? {
             id: data.ownedBy.value,
           }
-        : undefined,
+        : null,
     };
   }
 
@@ -145,6 +148,8 @@ export default function BrandFormPage({
     }
   });
 
+  const brand = form.watch("name");
+
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit} className="[&>div]:mb-4">
@@ -159,6 +164,22 @@ export default function BrandFormPage({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="brandDescription"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Deskripsi Brand</FormLabel>
+              <GenerateBrandDescription brand={brand} />
+              <TextEditor
+                onChange={value => field.onChange(value?.editor?.getHTML())}
+                value={field.value ?? ""}
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="price"
@@ -225,6 +246,8 @@ export default function BrandFormPage({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Alasan di tandai</FormLabel>
+              <GenerateSummary brand={brand} />
+
               <TextEditor
                 onChange={value => field.onChange(value?.editor?.getHTML())}
                 value={field.value ?? ""}
@@ -443,5 +466,96 @@ function Tags({
         creatable
       />
     </FormItem>
+  );
+}
+
+function GenerateSummary({
+  onGenerate,
+  brand,
+}: {
+  onGenerate?: (value: string) => void;
+  brand?: string;
+}) {
+  const [inputValue, setInputValue] = useState("");
+  const [summary, setSummary] = useState("");
+  const [debouncedInputValue] = useDebounceValue(inputValue, 500);
+  const [isLoading, setIsLoading] = useState(false);
+  async function handleGenerate() {
+    setIsLoading(true);
+    const response = await generateSummary({
+      text: debouncedInputValue,
+      brand: brand || "-",
+    });
+    setSummary(response || "");
+    onGenerate?.(response || "");
+    setIsLoading(false);
+  }
+
+  return (
+    <div className="p-4 bg-blue-50 rounded-md">
+      <h1 className="mb-1 text-sm">Pembantu AI</h1>
+      <div className="flex items-center gap-2">
+        <Input
+          placeholder="Masukkan isi artikel untuk membuat ringkasan"
+          onChange={e => setInputValue(e.target.value)}
+          value={inputValue}
+          className="w-full"
+        />
+        <Button
+          type="button"
+          onClick={handleGenerate}
+          className="w-fit"
+          disabled={isLoading}
+        >
+          Buat Ringkasan
+        </Button>
+      </div>
+      <p className="text-xs text-muted-foreground mt-2">{summary}</p>
+    </div>
+  );
+}
+
+function GenerateBrandDescription({
+  onGenerate,
+  brand,
+}: {
+  onGenerate?: (value: string) => void;
+  brand?: string;
+}) {
+  const [inputValue, setInputValue] = useState("");
+  const [summary, setSummary] = useState("");
+  const [debouncedInputValue] = useDebounceValue(inputValue, 500);
+  const [isLoading, setIsLoading] = useState(false);
+  async function handleGenerate() {
+    setIsLoading(true);
+    const response = await generateBrandDescription({
+      text: debouncedInputValue,
+    });
+    setSummary(response || "");
+    onGenerate?.(response || "");
+    setIsLoading(false);
+  }
+
+  return (
+    <div className="p-4 bg-blue-50 rounded-md">
+      <h1 className="mb-1 text-sm">Pembantu AI</h1>
+      <div className="flex items-center gap-2">
+        <Input
+          placeholder="Masukkan isi artikel untuk membuat deskripsi"
+          onChange={e => setInputValue(e.target.value)}
+          value={inputValue}
+          className="w-full"
+        />
+        <Button
+          type="button"
+          onClick={handleGenerate}
+          className="w-fit"
+          disabled={isLoading}
+        >
+          Buat Deskripsi
+        </Button>
+      </div>
+      <p className="text-xs text-muted-foreground mt-2">{summary}</p>
+    </div>
   );
 }

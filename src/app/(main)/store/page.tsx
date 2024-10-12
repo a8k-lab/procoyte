@@ -6,7 +6,7 @@ import { BrandStoreCard } from "@/components/shared/card/brand";
 import { ProductCard } from "@/components/shared/card/product";
 import { SearchInput } from "@/components/shared/search-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getBrands } from "@/server/queries";
+import { getBrands, getProducts } from "@/server/queries";
 import type { BrandsRecord } from "@/xata";
 
 export const metadata: Metadata = {
@@ -74,26 +74,25 @@ const NotFound = ({ keyword }: { keyword: string }) => {
   );
 };
 
-const ProductsTab = () => {
+async function ProductsTab() {
+  const products = await getProducts();
   return (
     <section className="grid grid-cols-2 gap-1">
-      <ProductCard
-        name="Total Care Mouthwash C."
-        imageSrc="/images/logo.svg"
-        price={1200000}
-        rating={4.9}
-        merchant="shopee"
-      />
-      <ProductCard
-        name="Total Care Mouthwash C."
-        imageSrc="/images/logo.svg"
-        price={1200000}
-        rating={4.7}
-        merchant="tokopedia"
-      />
+      {products?.map(product => (
+        <a key={product.id} href={product.url || ""} className="group">
+          <ProductCard
+            name={product?.name ?? ""}
+            imageSrc={product.imageUrl}
+            price={product.price || 0}
+            // rating={product.rating}
+            imageFromOtherSource={!!product.image_from_outsource}
+            merchant={"shopee"}
+          />
+        </a>
+      ))}
     </section>
   );
-};
+}
 
 const BrandsTab = ({ brands }: { brands: BrandsRecord[] }) => {
   return (

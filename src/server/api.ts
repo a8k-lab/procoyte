@@ -16,6 +16,7 @@ export async function getBrandRecommendations({
   const res = await fetch(`${recommenderBaseUrl}/brands/${id}?limit=${limit}`);
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
+    console.error("Failed to fetch data", res);
     throw new Error("Failed to fetch data");
   }
 

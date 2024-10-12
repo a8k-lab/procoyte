@@ -1,0 +1,16 @@
+{
+  "id": "mig_cs52rm7tni63c332rppg",
+  "parentID": "mig_cs5130n1uhulgm2ppqg0",
+  "checksum": "1:3e60a2ec5a2bc7e1390f74c25da48fdf4bb97ecbda4c30bd175cd7109eec48b4",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "brand_description",
+          "type": "text"
+        },
+        "table": "brands"
+      }
+    }
+  ]
+}

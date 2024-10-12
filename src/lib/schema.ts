@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const adminBrandSchema = z.object({
   name: z.string().min(1).optional(),
+  brandDescription: z.string().optional(),
   price: z.number().min(0).max(5).optional(),
   marked: z.enum(["0", "1"]).optional(),
   imageUrl: z.string().optional(),

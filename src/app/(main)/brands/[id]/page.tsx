@@ -1,5 +1,6 @@
 import { BrandCard } from "@/components/shared/card/brand";
 import { ProductCard } from "@/components/shared/card/product";
+import Price from "@/components/shared/price";
 import RouterButton from "@/components/shared/router-button";
 import { cn } from "@/lib/utils";
 import { getBrandRecommendations } from "@/server/api";
@@ -65,7 +66,6 @@ async function Content({
     ? await getBrandMarkSources({ id: brand?.id })
     : [];
 
-  console.log(brand.marked);
   return (
     <div
       className={cn(
@@ -98,6 +98,7 @@ async function Content({
               <p className="text-xs text-muted-foreground">
                 {brand?.location?.name ?? "-"}
               </p>
+              <Price price={brand?.price || 0} />
             </div>
           </div>
           {brand?.marked === 1 ? (
@@ -110,10 +111,21 @@ async function Content({
             />
           ) : null}
         </div>
+        {brand?.brand_description ? (
+          <div
+            className="mb-4 text-sm"
+            // biome-ignore lint: This is a sanitized string
+            dangerouslySetInnerHTML={{
+              __html: brand?.brand_description
+                ? sanitizeHtml(brand?.brand_description)
+                : "",
+            }}
+          />
+        ) : null}
         {brand?.marked === 1 ? (
           <>
-            <p
-              className="mb-4"
+            <div
+              className="mb-4 text-sm"
               // biome-ignore lint: This is a sanitized string
               dangerouslySetInnerHTML={{
                 __html: brand?.mark_reason
@@ -199,7 +211,11 @@ async function ProductList({
       <div className="flex items-center justify-between gap-2">
         <h1 className="font-semibold text-lg">Produk dari Brand</h1>
       </div>
-
+      {products?.length === 0 ? (
+        <p className="text-muted-foreground text-sm">
+          Tidak ada produk yang ditemukan
+        </p>
+      ) : null}
       <section className="mt-3 grid grid-cols-2 gap-3">
         {products?.map(product => (
           <a
