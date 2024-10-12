@@ -15,16 +15,16 @@ type HomePageProps = {
   };
 };
 
-export default async function Home({ searchParams }: HomePageProps) {
+export default async function Home({ searchParams: { q } }: HomePageProps) {
   const brands = await getBrands({
-    search: searchParams?.q || "",
+    search: q,
     size: 1,
   });
 
   const [brand, markedSources, brandRecommendations] = await Promise.all([
-    brands[0]?.id ? getBrand({ id: brands[0].id }) : null,
-    brands[0]?.id ? getBrandMarkSources({ id: brands[0].id }) : [],
-    brands[0]?.id
+    q && brands[0]?.id ? getBrand({ id: brands[0].id }) : null,
+    q && brands[0]?.id ? getBrandMarkSources({ id: brands[0].id }) : [],
+    q && brands[0]?.id
       ? getBrandRecommendations({ id: brands[0].id, limit: 3 })
       : null,
   ]);
