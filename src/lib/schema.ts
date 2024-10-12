@@ -20,6 +20,15 @@ export const adminBrandSchema = z.object({
       }),
     )
     .optional(),
+  markSources: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.string(),
+      }),
+    )
+    .optional(),
+  boosted: z.boolean().optional(),
 });
 
 export const reportSchema = z.object({

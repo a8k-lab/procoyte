@@ -3,6 +3,7 @@ import { type ControllerRenderProps, useForm } from "react-hook-form";
 
 import TextEditor from "@/components/shared/text-editor";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Combobox } from "@/components/ui/combobox";
 import {
   Form,
@@ -29,6 +30,7 @@ import {
   postLocationAction,
   postTagAction,
   replaceTagsAction,
+  upsertBrandMarkSourcesAction,
 } from "@/server/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -104,6 +106,7 @@ export default function BrandFormPage({
       marked: data?.marked ? +data.marked : 0,
       mark_reason: data.markReason ?? "",
       location: await getLocationPayloadFromData(data),
+      boosted: data.boosted ?? false,
       owned_by: data.ownedBy?.value
         ? {
             id: data.ownedBy.value,
@@ -125,6 +128,15 @@ export default function BrandFormPage({
         tagIds: tagsPayload?.map(tag => tag.value) ?? [],
       });
 
+      await upsertBrandMarkSourcesAction({
+        brandId: res?.id,
+        markSources:
+          data?.markSources?.map(markSource => ({
+            name: markSource.name,
+            url: markSource.url,
+          })) ?? [],
+      });
+
       toast({
         variant: "default",
 
@@ -139,6 +151,14 @@ export default function BrandFormPage({
       await replaceTagsAction({
         brandId: res?.id,
         tagIds: tagsPayload?.map(tag => tag.value) ?? [],
+      });
+      await upsertBrandMarkSourcesAction({
+        brandId: res?.id,
+        markSources:
+          data?.markSources?.map(markSource => ({
+            name: markSource.name,
+            url: markSource.url,
+          })) ?? [],
       });
       toast({
         variant: "default",
@@ -170,7 +190,7 @@ export default function BrandFormPage({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Deskripsi Brand</FormLabel>
-              <GenerateBrandDescription brand={brand} />
+              <GenerateBrandDescription />
               <TextEditor
                 onChange={value => field.onChange(value?.editor?.getHTML())}
                 value={field.value ?? ""}
@@ -268,11 +288,99 @@ export default function BrandFormPage({
           render={({ field }) => <Tags field={field} />}
         />
 
+        <FormField
+          control={form.control}
+          name="markSources"
+          render={({ field }) => <MarkSources field={field} />}
+        />
+
+        <FormField
+          control={form.control}
+          name="boosted"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Boosted</FormLabel>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Boosted akan menaikan hasil pencarian alternative
+                </p>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button className="ml-auto" type="submit">
           Simpan
         </Button>
       </form>
     </Form>
+  );
+}
+
+function MarkSources({
+  field,
+}: {
+  field: ControllerRenderProps<AdminBrandSchema, "markSources">;
+}) {
+  return (
+    <FormItem>
+      <FormLabel>Mark Sources</FormLabel>
+      {/* Mark sources  yang telah dimasukan*/}
+      {field.value?.map((markSource, index) => (
+        <div key={markSource.name} className="flex items-center gap-2">
+          <Input
+            placeholder="Masukkan nama mark source"
+            onChange={e =>
+              field.onChange(
+                field.value?.map((source, i) =>
+                  i === index ? { ...source, name: e.target.value } : source,
+                ),
+              )
+            }
+            value={markSource.name}
+            className="w-full"
+          />
+          <Input
+            placeholder="Masukkan url mark source"
+            onChange={e =>
+              field.onChange(
+                field.value?.map((source, i) =>
+                  i === index ? { ...source, url: e.target.value } : source,
+                ),
+              )
+            }
+            value={markSource.url}
+            className="w-full"
+          />
+          <Button
+            type="button"
+            onClick={() =>
+              field.onChange(
+                field.value?.filter((source, i) => i !== index) ?? [],
+              )
+            }
+            className="w-fit"
+          >
+            Hapus
+          </Button>
+        </div>
+      ))}
+      <Button
+        type="button"
+        size="sm"
+        variant="link"
+        onClick={() =>
+          field.onChange([...(field.value || []), { name: "", url: "" }])
+        }
+        className="w-fit"
+      >
+        Tambah
+      </Button>
+    </FormItem>
   );
 }
 
@@ -518,10 +626,8 @@ function GenerateSummary({
 
 function GenerateBrandDescription({
   onGenerate,
-  brand,
 }: {
   onGenerate?: (value: string) => void;
-  brand?: string;
 }) {
   const [inputValue, setInputValue] = useState("");
   const [summary, setSummary] = useState("");

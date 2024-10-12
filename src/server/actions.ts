@@ -1,5 +1,5 @@
 "use server";
-import type { ReportsRecord } from "@/xata";
+import type { MarkSourcesRecord, ReportsRecord } from "@/xata";
 import {
   type PatchBrandParams,
   type PostBrandParams,
@@ -13,6 +13,7 @@ import {
   postReport,
   postTag,
   replaceTags,
+  upsertBrandMarkSources,
 } from "./queries";
 
 import OpenAI from "openai";
@@ -155,4 +156,17 @@ export async function generateBrandDescription({
   });
 
   return res?.choices?.[0]?.message?.content;
+}
+
+export async function upsertBrandMarkSourcesAction({
+  brandId,
+  markSources,
+}: {
+  brandId: string;
+  markSources: Pick<MarkSourcesRecord, "name" | "url">[];
+}) {
+  return upsertBrandMarkSources({
+    brandId,
+    markSources,
+  });
 }

@@ -128,6 +128,8 @@ export async function postBrand({
   location,
   mark_reason,
   owned_by,
+  boosted,
+  brand_description,
 }: PostBrandParams) {
   const brand = await db.brands.create({
     name,
@@ -137,6 +139,8 @@ export async function postBrand({
     location,
     mark_reason,
     owned_by,
+    boosted,
+    brand_description,
   });
   return brand;
 }
@@ -302,4 +306,34 @@ export async function postReport({
     alternative,
   });
   return report;
+}
+
+export async function upsertBrandMarkSources({
+  brandId,
+  markSources,
+}: {
+  brandId: string;
+  markSources: Pick<MarkSourcesRecord, "name" | "url">[];
+}) {
+  const allMarkSourcesFromBrand = await db.mark_sources.select(["id"]).getAll({
+    filter: {
+      brand: {
+        id: brandId,
+      },
+    },
+  });
+
+  await db.mark_sources.delete(allMarkSourcesFromBrand);
+
+  const createdRes = await db.mark_sources.create(
+    markSources.map(markSource => ({
+      brand: {
+        id: brandId,
+      },
+      name: markSource.name,
+      url: markSource.url,
+    })),
+  );
+
+  return JSON.parse(JSON.stringify(createdRes)) as typeof createdRes;
 }
