@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "@/lib/db";
-import type { BrandsRecord } from "@/xata";
+import type { BrandsRecord, MarkSourcesRecord, TagsRecord } from "@/xata";
 import type {
   EditableData,
   Identifiable,
@@ -16,6 +16,16 @@ export async function getBrands({
   search?: string;
   isMarked?: boolean;
 } & OffsetNavigationOptions = {}) {
+  // biome-ignore lint:
+  const filter: any = {};
+
+  if (search) {
+    filter.name = { $iContains: search };
+  }
+  if (isMarked !== undefined) {
+    filter.marked = isMarked ? 1 : 0;
+  }
+
   const brands = await db.brands
     .select([
       "id",
@@ -32,14 +42,7 @@ export async function getBrands({
         size,
         offset,
       },
-      filter: {
-        $all: {
-          name: {
-            $iContains: search,
-          },
-          marked: isMarked ? 1 : 0,
-        },
-      },
+      filter,
       sort: {
         "xata.createdAt": "desc",
       },
@@ -50,7 +53,7 @@ export async function getBrands({
 
 export async function getBrand({ id }: { id: string }) {
   const brand = await db.brands.read(id, ["*", "location.*", "owned_by.*"]);
-  return brand;
+  return brand as Awaited<BrandsRecord>;
 }
 
 export async function getBrandMarkSources({ id }: { id: string }) {
@@ -59,7 +62,7 @@ export async function getBrandMarkSources({ id }: { id: string }) {
       "brand.id": id,
     },
   });
-  return brand;
+  return brand as Awaited<MarkSourcesRecord[]>;
 }
 
 export async function postTag({ name }: { name: string }) {
@@ -75,7 +78,7 @@ export async function getTagByName({ name }: { name: string }) {
       name,
     },
   });
-  return tag;
+  return tag as Awaited<TagsRecord>;
 }
 
 export async function postBrandTag({

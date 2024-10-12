@@ -1,12 +1,34 @@
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 
-import { TextSeparator } from "@/components/shared/text-separator";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { getBrandRecommendations } from "@/server/api";
+import { getBrand, getBrandMarkSources, getBrands } from "@/server/queries";
+import type { BrandsRecord, MarkSourcesRecord } from "@/xata";
+import MarkResultSection from "./_components/mark-result-section";
+import RecommendationsSection from "./_components/recommendations-section";
+import SearchSection from "./_components/search-section";
 
-export default function Home() {
+type HomePageProps = {
+  searchParams: {
+    q: string;
+  };
+};
+
+export default async function Home({ searchParams: { q } }: HomePageProps) {
+  const brands = await getBrands({
+    search: q,
+    size: 1,
+  });
+
+  const [brand, markedSources, brandRecommendations] = await Promise.all([
+    q && brands[0]?.id ? getBrand({ id: brands[0].id }) : null,
+    q && brands[0]?.id ? getBrandMarkSources({ id: brands[0].id }) : [],
+    q && brands[0]?.id
+      ? getBrandRecommendations({ id: brands[0].id, limit: 3 })
+      : null,
+  ]);
+
   return (
     <>
       <div
@@ -61,24 +83,19 @@ export default function Home() {
         </h1>
       </section>
 
-      <section className="mt-6 flex flex-col items-center justify-center gap-4 w-full sm:flex-row md:mt-8">
-        <Input
-          placeholder="Masukkan nama, link, brand"
-          className="w-full sm:w-[320px]"
+      <SearchSection />
+
+      <MarkResultSection
+        result={brand as BrandsRecord}
+        markedSources={markedSources as MarkSourcesRecord[]}
+      />
+
+      {/* only show recommendations if the brand is marked */}
+      {brand?.marked === 1 && brandRecommendations ? (
+        <RecommendationsSection
+          recommendations={brandRecommendations?.recommendations}
         />
-
-        <div className="flex flex-col items-stretch justify-stretch gap-2 w-full sm:flex-row sm:w-auto">
-          <Button>
-            <Icon icon="lucide:badge-check" className="size-4" /> Cari
-          </Button>
-
-          <TextSeparator className="sm:hidden">atau</TextSeparator>
-
-          <Button variant="outline">
-            <Icon icon="lucide:badge-check" className="size-4" /> Scan QR
-          </Button>
-        </div>
-      </section>
+      ) : null}
     </>
   );
 }
