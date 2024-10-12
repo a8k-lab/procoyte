@@ -3,24 +3,17 @@ import sanitizeHtml from "sanitize-html";
 
 import { LinkButton } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { BrandsRecord, MarkSourcesRecord } from "@/xata";
 
-type ProductMarkCardProps =
-  | {
-      isMarked?: false;
-    }
-  | {
-      isMarked: true;
-      name: string;
-      owner: string;
-      content: string;
-      sources: Array<{
-        name: string;
-        url: string;
-      }>;
-      proofUrl: string;
-    };
+type MarkResultCardProps = Partial<
+  BrandsRecord & {
+    isMarked: boolean;
+    markedSources: MarkSourcesRecord[];
+  }
+>;
 
-export const ProductMarkCard = (props: ProductMarkCardProps) => {
+export const MarkResultCard = (props: MarkResultCardProps) => {
+  console.log("card:", props);
   return (
     <article
       className={cn(
@@ -35,31 +28,36 @@ export const ProductMarkCard = (props: ProductMarkCardProps) => {
         )}
       >
         {props.isMarked
-          ? "Produk ini masuk ke daftar boikot!"
-          : "Produk ini tidak diboikot"}
+          ? `${props.name} masuk ke daftar boikot!`
+          : "Produk/Brand ini tidak diboikot"}
       </h1>
 
       {props.isMarked ? (
         <div className="flex flex-col items-center gap-6">
-          <div>
+          <div className="w-full">
             <h2>
-              {props.name} dimiliki oleh <strong>{props.owner}</strong>.
+              {props.name}
+              {props.owned_by ? ` is owned by ${props.owned_by.name}` : " -"}
             </h2>
 
             <p
               className="my-5"
               // biome-ignore lint: This is a sanitized string
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(props.content) }}
+              dangerouslySetInnerHTML={{
+                __html: props.mark_reason
+                  ? sanitizeHtml(props.mark_reason)
+                  : "-",
+              }}
             />
 
             <div className="font-bold">
               <h2>Source:</h2>
               <ul>
-                {props.sources?.map((source, idx) => (
+                {props.markedSources?.map((source, idx) => (
                   <li key={source.name}>
                     {idx + 1}.{" "}
                     <a
-                      href={source.url}
+                      href={source.url ?? "#"}
                       target="_blank"
                       rel="noreferrer noopener"
                       className="underline"
@@ -72,13 +70,16 @@ export const ProductMarkCard = (props: ProductMarkCardProps) => {
             </div>
           </div>
 
-          <LinkButton href={props.proofUrl} variant="destructive">
+          <LinkButton
+            href={props?.markedSources?.[0].url ?? "#"}
+            variant="destructive"
+          >
             <Icon icon="majesticons:open-line" className="size-6" />
             Open Proof
           </LinkButton>
         </div>
       ) : (
-        <p>Produk ini tidak masuk ke daftar boikot.</p>
+        <p>"{props.name}" tidak masuk ke daftar boikot.</p>
       )}
     </article>
   );
