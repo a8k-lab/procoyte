@@ -66,7 +66,7 @@ const BrandsSearch = ({ brands }: { brands: BrandsRecord[] }) => {
         <Link key={brand.id} href={`/brands/${brand.id}`}>
           <BrandCard
             name={brand.name}
-            description={brand.tag?.name ?? "-"}
+            description={brand.location?.name ?? "-"}
             imageUrl={brand.imageUrl}
           />
         </Link>

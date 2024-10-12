@@ -1,0 +1,16 @@
+{
+  "id": "mig_cs5130n1uhulgm2ppqg0",
+  "parentID": "mig_cs512bvtni63c332rpb0",
+  "checksum": "1:e0ebd3c371a7f09cd1c7196a5f87e3c05a4ba8d34a52685852cab9a506769b0d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "image_from_outsource",
+          "type": "bool"
+        },
+        "table": "products"
+      }
+    }
+  ]
+}

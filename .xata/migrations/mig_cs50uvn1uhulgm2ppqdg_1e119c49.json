@@ -1,0 +1,16 @@
+{
+  "id": "mig_cs50uvn1uhulgm2ppqdg",
+  "parentID": "mig_cs50umv1uhulgm2ppqcg",
+  "checksum": "1:1e119c49a78c9482dea4250aa042291574b19e63db565762600166680373af3d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "imageUrl",
+          "type": "text"
+        },
+        "table": "products"
+      }
+    }
+  ]
+}

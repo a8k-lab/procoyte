@@ -268,3 +268,13 @@ export async function getBrandTags({
 
   return JSON.parse(JSON.stringify(tags)) as typeof tags;
 }
+
+export function getProductsByBrandId(id: string) {
+  return db.products.select(["*", "brand.*"]).getAll({
+    filter: {
+      brand: {
+        id,
+      },
+    },
+  });
+}

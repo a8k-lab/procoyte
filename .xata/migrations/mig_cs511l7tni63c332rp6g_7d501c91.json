@@ -1,0 +1,16 @@
+{
+  "id": "mig_cs511l7tni63c332rp6g",
+  "parentID": "mig_cs511entni63c332rp5g",
+  "checksum": "1:7d501c912c3498cdb5497ebafe031319467bcfce6a30388553ff96bbbb5c8c2e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "merchant_name",
+          "type": "text"
+        },
+        "table": "products"
+      }
+    }
+  ]
+}

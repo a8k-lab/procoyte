@@ -9,6 +9,7 @@ type ProductCardProps = {
   rating?: number;
   imageSrc: string | null | undefined;
   merchant?: "tokopedia" | "shopee"; // Temporary
+  imageFromOtherSource?: boolean;
 };
 
 export const ProductCard = ({
@@ -17,16 +18,25 @@ export const ProductCard = ({
   rating = 0,
   imageSrc,
   merchant,
+  imageFromOtherSource,
 }: ProductCardProps) => {
   return (
     <article className="group bg-white min-w-[165px] h-full overflow-hidden rounded-xl border text-sm text-left font-semibold">
       <div className="h-[140px] w-full relative overflow-hidden">
-        <Image
-          src={imageSrc || "/images/logo.svg"}
-          alt={name}
-          className="transition-transform object-cover group-hover:scale-110"
-          fill
-        />
+        {imageFromOtherSource ? (
+          <img
+            src={imageSrc || "/images/logo.svg"}
+            alt={name}
+            className="transition-transform object-cover group-hover:scale-110"
+          />
+        ) : (
+          <Image
+            src={imageSrc || "/images/logo.svg"}
+            alt={name}
+            className="transition-transform object-cover group-hover:scale-110"
+            fill
+          />
+        )}
       </div>
 
       <div className="flex flex-col gap-2 p-2 h-[calc(100%-140px)] border-t">

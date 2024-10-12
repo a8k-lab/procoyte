@@ -32,6 +32,7 @@ export async function GET(req: Request) {
       "brands.boosted as boosted",
       "brands.imageUrl",
       "locations.name as location",
+      "brands.imageUrl as imageUrl",
     ])
     .limit(1000);
 

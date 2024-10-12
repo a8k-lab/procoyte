@@ -113,7 +113,7 @@ export default function BrandFormPage({
     if (edit) {
       const res = await patchBrandAction({
         id: editId,
-        ...getPayloadFromData(data),
+        ...(await getPayloadFromData(data)),
       });
 
       const tagsPayload = await getTagPayloadFromData(data);
@@ -185,12 +185,12 @@ export default function BrandFormPage({
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value}
                   name="marked"
                 >
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="0" />
+                      <RadioGroupItem value="0" checked={field.value === "0"} />
                     </FormControl>
                     <FormLabel className="font-normal">
                       Tidak Ditandai
@@ -198,7 +198,7 @@ export default function BrandFormPage({
                   </FormItem>
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="1" />
+                      <RadioGroupItem checked={field.value === "1"} value="1" />
                     </FormControl>
                     <FormLabel className="font-normal">Ditandai</FormLabel>
                   </FormItem>
@@ -290,12 +290,16 @@ function LocationCombobox({
       <Combobox
         async
         inputValue={inputValue}
-        onChange={value =>
+        onChange={value => {
+          if (!value?.value) {
+            field.onChange(null);
+            return;
+          }
           field.onChange({
             label: value?.label ?? "",
             value: value?.value ?? "",
-          })
-        }
+          });
+        }}
         value={field.value}
         clearable
         options={options}
@@ -339,15 +343,20 @@ function OwnerBrandCombobox({
   return (
     <FormItem>
       <FormLabel className="block">Pemilik brand</FormLabel>
+
       <Combobox
         creatable
-        onChange={value =>
+        onChange={value => {
+          if (!value?.value) {
+            field.onChange(null);
+            return;
+          }
           field.onChange({
             label: value?.label ?? "",
             value: value?.value ?? "",
-          })
-        }
-        value={field.value}
+          });
+        }}
+        value={field.value || undefined}
         async
         inputValue={inputValue}
         clearable
@@ -366,7 +375,12 @@ function ImageUpload({
   return (
     <FormItem>
       <FormLabel>Gambar</FormLabel>
-      <Image src={field.value || ""} alt="Gambar" width={200} height={200} />
+      <Image
+        src={field.value || "/images/logo.svg"}
+        alt="Gambar"
+        width={160}
+        height={160}
+      />
       <p className="text-xs text-muted-foreground">{field.value}</p>
       <div className="w-min p-4">
         <UploadButton

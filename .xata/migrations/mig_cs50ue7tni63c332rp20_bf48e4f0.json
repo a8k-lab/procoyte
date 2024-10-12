@@ -1,0 +1,16 @@
+{
+  "id": "mig_cs50ue7tni63c332rp20",
+  "parentID": "mig_cs50uantni63c332rp10",
+  "checksum": "1:bf48e4f073c83fb158a17942c406bca600701539f67c55277534de5db6c0bbf8",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "price",
+          "type": "int"
+        },
+        "table": "products"
+      }
+    }
+  ]
+}

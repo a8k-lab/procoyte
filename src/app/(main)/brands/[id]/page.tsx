@@ -1,8 +1,13 @@
 import { BrandCard } from "@/components/shared/card/brand";
+import { ProductCard } from "@/components/shared/card/product";
 import RouterButton from "@/components/shared/router-button";
 import { cn } from "@/lib/utils";
 import { getBrandRecommendations } from "@/server/api";
-import { getBrand, getBrandMarkSources } from "@/server/queries";
+import {
+  getBrand,
+  getBrandMarkSources,
+  getProductsByBrandId,
+} from "@/server/queries";
 import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -28,7 +33,8 @@ export default async function BrandPage({ params: { id } }: BrandPageProps) {
     <>
       <Header />
       <Content brand={brand} />
-      <Alternative brand={brand} />
+      {brand.marked === 1 ? <Alternative brand={brand} /> : null}
+      {brand.marked === 0 ? <ProductList brand={brand} /> : null}
     </>
   );
 }
@@ -94,39 +100,53 @@ async function Content({
               </p>
             </div>
           </div>
-          <Image
-            src={"/images/boikot-stamp.png"}
-            alt="boikot!"
-            width={48}
-            height={48}
-            className="rounded-md"
-          />
+          {brand?.marked === 1 ? (
+            <Image
+              src={"/images/boikot-stamp.png"}
+              alt="boikot!"
+              width={48}
+              height={48}
+              className="rounded-md"
+            />
+          ) : null}
         </div>
-        <p
-          className="mb-4"
-          // biome-ignore lint: This is a sanitized string
-          dangerouslySetInnerHTML={{
-            __html: brand?.mark_reason ? sanitizeHtml(brand?.mark_reason) : "-",
-          }}
-        />
-        <div>
-          <h2 className="text-sm font-semibold text-text-primary">Source:</h2>
-          <div>
-            {markedSources.map((source, index) => (
-              <div
-                key={source.id}
-                className="flex gap-2 mb-2 text-sm font-bold text-text-text-primary"
-              >
-                {index + 1}.
-                <a href={source.url ?? "-"} target="_blank" rel="noreferrer">
-                  <p className="text-sm font-bold text-text-text-primary underline">
-                    {source.name}
-                  </p>
-                </a>
+        {brand?.marked === 1 ? (
+          <>
+            <p
+              className="mb-4"
+              // biome-ignore lint: This is a sanitized string
+              dangerouslySetInnerHTML={{
+                __html: brand?.mark_reason
+                  ? sanitizeHtml(brand?.mark_reason)
+                  : "-",
+              }}
+            />
+            <div>
+              <h2 className="text-sm font-semibold text-text-primary">
+                Source:
+              </h2>
+              <div>
+                {markedSources.map((source, index) => (
+                  <div
+                    key={source.id}
+                    className="flex gap-2 mb-2 text-sm font-bold text-text-text-primary"
+                  >
+                    {index + 1}.
+                    <a
+                      href={source.url ?? "-"}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <p className="text-sm font-bold text-text-text-primary underline">
+                        {source.name}
+                      </p>
+                    </a>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </>
+        ) : null}
       </article>
     </div>
   );
@@ -156,9 +176,47 @@ async function Alternative({
             <BrandCard
               name={brand.name}
               description={brand?.location || "-"}
-              imageUrl={brand.imageUrl || ""}
+              imageUrl={brand.imageUrl}
             />
           </Link>
+        ))}
+      </section>
+    </section>
+  );
+}
+
+async function ProductList({
+  brand,
+}: {
+  brand: {
+    id: string;
+  };
+}) {
+  const products = await getProductsByBrandId(brand?.id);
+
+  return (
+    <section className="mt-8 text-left">
+      <div className="flex items-center justify-between gap-2">
+        <h1 className="font-semibold text-lg">Produk dari Brand</h1>
+      </div>
+
+      <section className="mt-3 grid grid-cols-2 gap-3">
+        {products?.map(product => (
+          <a
+            key={product.id}
+            href={product.url || ""}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ProductCard
+              name={product?.name ?? ""}
+              imageSrc={product.imageUrl}
+              price={product.price || 0}
+              // rating={product.rating}
+              imageFromOtherSource={!!product.image_from_outsource}
+              merchant={"shopee"}
+            />
+          </a>
         ))}
       </section>
     </section>
