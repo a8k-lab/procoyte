@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import type {
   BrandsRecord,
   MarkSourcesRecord,
+  ProductsRecord,
   ReportsRecord,
   TagsRecord,
 } from "@/xata";
@@ -281,7 +282,7 @@ export function getProductsByBrandId(id: string) {
         id,
       },
     },
-  });
+  }) as Promise<ProductsRecord[]>;
 }
 
 export async function postReport({
