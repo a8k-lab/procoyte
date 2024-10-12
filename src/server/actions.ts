@@ -1,4 +1,5 @@
 "use server";
+import type { ReportsRecord } from "@/xata";
 import {
   type PatchBrandParams,
   type PostBrandParams,
@@ -9,6 +10,7 @@ import {
   patchBrand,
   postBrand,
   postLocation,
+  postReport,
   postTag,
   replaceTags,
 } from "./queries";
@@ -101,4 +103,10 @@ export async function getBrandTagsAction({
   return getBrandTags({
     id,
   });
+}
+
+export async function postReportAction(
+  data: Partial<Omit<ReportsRecord, "id">>,
+) {
+  return postReport(data);
 }

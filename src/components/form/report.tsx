@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { type ControllerRenderProps, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,25 +15,55 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "@/hooks/use-toast";
 import { type ReportSchema, reportSchema } from "@/lib/schema";
+import { UploadButton } from "@/lib/uploadthings";
+import { postReportAction } from "@/server/actions";
 
 export const ReportForm = () => {
   const form = useForm<ReportSchema>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
       name: "",
-      purpose: "0",
+      purpose: "report-brand-product",
       imageUrl: "",
       reason: "",
       proofUrl: "",
       alternative: "",
     },
   });
+  const { isSubmitting } = form.formState;
 
-  const onSubmit = (values: ReportSchema) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log("submitted:", values);
+  const getPayloadFromData = (data: ReportSchema) => {
+    return {
+      name: data.name ?? "",
+      purpose: data.purpose ?? "report-brand-product",
+      imageUrl: data.imageUrl ?? "",
+      reason: data.reason ?? "",
+      proofUrl: data.proofUrl ?? "",
+      alternative: data.alternative ?? "",
+    };
+  };
+
+  const onSubmit = async (values: ReportSchema) => {
+    try {
+      console.log("submitted:", values);
+      const payload = getPayloadFromData(values);
+      await postReportAction(payload);
+      toast({
+        variant: "default",
+        title: "Sukses!",
+        description: "Laporan berhasil dikirim",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("error", error);
+      toast({
+        variant: "destructive",
+        title: "Error!",
+        description: "Laporan gagal dikirim",
+      });
+    }
   };
 
   return (
@@ -69,7 +100,7 @@ export const ReportForm = () => {
                 >
                   <FormItem className="flex items-center space-x-2 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="0" />
+                      <RadioGroupItem value="false-information" />
                     </FormControl>
                     <FormLabel className="font-normal">
                       False Information
@@ -77,7 +108,7 @@ export const ReportForm = () => {
                   </FormItem>
                   <FormItem className="flex items-center space-x-2 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="1" />
+                      <RadioGroupItem value="report-brand-product" />
                     </FormControl>
                     <FormLabel className="font-normal">
                       Lapor Brand/Produk
@@ -94,13 +125,7 @@ export const ReportForm = () => {
         <FormField
           control={form.control}
           name="imageUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Gambar/Logo</FormLabel>
-              <Input {...field} type="file" />
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => <ImageUpload field={field} />}
         />
 
         <FormField
@@ -142,10 +167,37 @@ export const ReportForm = () => {
           )}
         />
 
-        <Button type="submit" className="w-full">
-          Submit
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Loading..." : "Submit"}
         </Button>
       </form>
     </Form>
+  );
+};
+
+const ImageUpload = ({
+  field,
+}: {
+  field: ControllerRenderProps<ReportSchema, "imageUrl">;
+}) => {
+  return (
+    <FormItem>
+      <FormLabel>Gambar/Logo</FormLabel>
+      <Image src={field.value || ""} alt="" width={200} height={100} />
+      <p className="text-xs text-muted-foreground">{field.value}</p>
+      <div className="w-min p-4">
+        <UploadButton
+          onUploadError={(error: Error) => {
+            // Do something with the error.
+            console.log("Error: ", error);
+            alert(`ERROR! ${error.message}`);
+          }}
+          onClientUploadComplete={res => {
+            field.onChange(res[0].url);
+          }}
+          endpoint="imageUploader"
+        />
+      </div>
+    </FormItem>
   );
 };
