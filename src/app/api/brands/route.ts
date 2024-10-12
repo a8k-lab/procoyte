@@ -7,6 +7,7 @@ type DedupedBrand = {
   tag: string;
   boosted: boolean;
   imageUrl: string;
+  location: string;
   tags: {
     tag_id: string;
     tag_name: string;
@@ -20,6 +21,8 @@ export async function GET(req: Request) {
     .selectFrom("brands")
     .innerJoin("brands_tags", "brands.id", "brands_tags.brand")
     .innerJoin("tags", "tags.id", "brands_tags.tag")
+    // add location
+    .leftJoin("locations", "locations.id", "brands.location")
     .select([
       "brands.id as brand_id",
       "brands.name as brand_name",
@@ -28,6 +31,7 @@ export async function GET(req: Request) {
       "price",
       "brands.boosted as boosted",
       "brands.imageUrl",
+      "locations.name as location",
     ])
     .limit(1000);
 
@@ -54,6 +58,7 @@ export async function GET(req: Request) {
         tag: brand.tag_name || "",
         boosted: brand.boosted || false,
         imageUrl: brand.imageUrl || "",
+        location: brand.location || "",
         tags: brand.tag_id
           ? [
               {

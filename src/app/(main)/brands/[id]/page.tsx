@@ -1,9 +1,15 @@
+import { BrandCard } from "@/components/shared/card/brand";
 import RouterButton from "@/components/shared/router-button";
 import { cn } from "@/lib/utils";
-import { getBrand, getBrandMarkSources } from "@/server/queries";
+import {
+  getBrand,
+  getBrandAlternatives,
+  getBrandMarkSources,
+} from "@/server/queries";
 import { Icon } from "@iconify/react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 
 type BrandPageProps = {
@@ -25,6 +31,7 @@ export default async function BrandPage({ params: { id } }: BrandPageProps) {
     <>
       <Header />
       <Content brand={brand} />
+      <Alternative brand={brand} />
     </>
   );
 }
@@ -123,5 +130,35 @@ async function Content({
         </div>
       </article>
     </div>
+  );
+}
+
+async function Alternative({
+  brand,
+}: {
+  brand: {
+    id: string;
+  };
+}) {
+  const alternativeBrands = await getBrandAlternatives({ id: brand?.id });
+
+  return (
+    <section className="mt-8 text-left">
+      <div className="flex items-center justify-between gap-2">
+        <h1 className="font-semibold text-lg">Brand Alternatif</h1>
+      </div>
+
+      <section className="mt-3 grid grid-cols-2 gap-3">
+        {alternativeBrands?.recommendations?.map(brand => (
+          <Link key={brand.id} href={`/brands/${brand.id}`}>
+            <BrandCard
+              name={brand.name}
+              description={"-"}
+              imageUrl={brand.imageUrl}
+            />
+          </Link>
+        ))}
+      </section>
+    </section>
   );
 }
