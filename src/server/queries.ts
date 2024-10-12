@@ -16,6 +16,16 @@ export async function getBrands({
   search?: string;
   isMarked?: boolean;
 } & OffsetNavigationOptions = {}) {
+  // biome-ignore lint:
+  const filter: any = {};
+
+  if (search) {
+    filter.name = { $iContains: search };
+  }
+  if (isMarked !== undefined) {
+    filter.marked = isMarked ? 1 : 0;
+  }
+
   const brands = await db.brands
     .select([
       "id",
@@ -32,14 +42,7 @@ export async function getBrands({
         size,
         offset,
       },
-      filter: {
-        $all: {
-          name: {
-            $iContains: search,
-          },
-          marked: isMarked ? 1 : 0,
-        },
-      },
+      filter,
       sort: {
         "xata.createdAt": "desc",
       },
