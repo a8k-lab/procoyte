@@ -26,6 +26,7 @@ import {
   getTagsAction,
   patchBrandAction,
   postBrandAction,
+  postLocationAction,
   postTagAction,
   replaceTagsAction,
 } from "@/server/actions";
@@ -48,14 +49,13 @@ export default function BrandFormPage({
 
   const edit = !!editId;
   async function getLocationPayloadFromData(data: AdminBrandSchema) {
-    if (!data?.location?.value) return undefined;
+    if (!data?.location?.value) return null;
     if (data?.location?.value === "__new__") {
-      const resp = await postTagAction({
+      const resp = await postLocationAction({
         name: data.location?.label ?? "",
       });
       return {
         id: resp.id,
-        name: resp.name,
       };
     }
 
@@ -323,6 +323,7 @@ function LocationCombobox({
             value: value?.value ?? "",
           });
         }}
+        creatable
         value={field.value}
         clearable
         options={options}
