@@ -33,7 +33,7 @@ export const MarkResultCard = (props: MarkResultCardProps) => {
       </h1>
 
       {props.isMarked ? (
-        <div className="flex flex-col items-center gap-6">
+        <div className="md:flex flex-col items-center">
           <div className="w-full">
             <h2>
               {props.name}
@@ -73,6 +73,7 @@ export const MarkResultCard = (props: MarkResultCardProps) => {
           <LinkButton
             href={props?.markedSources?.[0].url ?? "#"}
             variant="destructive"
+            className="mt-6"
           >
             <Icon icon="majesticons:open-line" className="size-6" />
             Open Proof

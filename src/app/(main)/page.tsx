@@ -2,9 +2,11 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 
 import { cn } from "@/lib/utils";
+import { getBrandRecommendations } from "@/server/api";
 import { getBrand, getBrandMarkSources, getBrands } from "@/server/queries";
 import type { BrandsRecord, MarkSourcesRecord } from "@/xata";
 import MarkResultSection from "./_components/mark-result-section";
+import RecommendationsSection from "./_components/recommendations-section";
 import SearchSection from "./_components/search-section";
 
 type HomePageProps = {
@@ -19,11 +21,12 @@ export default async function Home({ searchParams }: HomePageProps) {
     size: 1,
   });
 
-  const brandPromise =
-    brands.length > 0 ? getBrand({ id: brands[0].id }) : null;
-  const [brand, markedSources] = await Promise.all([
-    brandPromise,
+  const [brand, markedSources, brandRecommendations] = await Promise.all([
+    brands[0]?.id ? getBrand({ id: brands[0].id }) : null,
     brands[0]?.id ? getBrandMarkSources({ id: brands[0].id }) : [],
+    brands[0]?.id
+      ? getBrandRecommendations({ id: brands[0].id, limit: 3 })
+      : null,
   ]);
 
   return (
@@ -86,6 +89,13 @@ export default async function Home({ searchParams }: HomePageProps) {
         result={brand as BrandsRecord}
         markedSources={markedSources as MarkSourcesRecord[]}
       />
+
+      {/* only show recommendations if the brand is marked */}
+      {brand?.marked === 1 && brandRecommendations ? (
+        <RecommendationsSection
+          recommendations={brandRecommendations?.recommendations}
+        />
+      ) : null}
     </>
   );
 }

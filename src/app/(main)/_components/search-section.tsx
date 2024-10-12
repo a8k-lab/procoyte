@@ -30,6 +30,7 @@ export default function SearchSection() {
           name="q"
           placeholder="Masukkan nama, link, brand"
           className="w-full sm:w-[320px]"
+          minLength={3}
           required
         />
 
