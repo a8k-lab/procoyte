@@ -1,0 +1,16 @@
+{
+  "id": "mig_cs511vntni63c332rp90",
+  "parentID": "mig_cs511l7tni63c332rp6g",
+  "checksum": "1:7cb695dfedce4a1e73633caf5722edbb8828a906043ca26af748d8496f79931d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "imageUrl",
+          "type": "text"
+        },
+        "table": "reports"
+      }
+    }
+  ]
+}

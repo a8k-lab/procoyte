@@ -32,6 +32,7 @@ const tables = [
       { column: "brand", table: "mark_sources" },
       { column: "brand", table: "brands_tags" },
       { column: "owned_by", table: "brands" },
+      { column: "brand", table: "products" },
     ],
   },
   {
@@ -54,6 +55,28 @@ const tables = [
     columns: [{ name: "name", type: "text", notNull: true, defaultValue: "" }],
     revLinks: [{ column: "location", table: "brands" }],
   },
+  {
+    name: "products",
+    columns: [
+      { name: "name", type: "text" },
+      { name: "price", type: "int" },
+      { name: "url", type: "text" },
+      { name: "brand", type: "link", link: { table: "brands" } },
+      { name: "imageUrl", type: "text" },
+      { name: "merchant_name", type: "text" },
+    ],
+  },
+  {
+    name: "reports",
+    columns: [
+      { name: "name", type: "text" },
+      { name: "purpose", type: "text" },
+      { name: "imageUrl", type: "text" },
+      { name: "reason", type: "text" },
+      { name: "proofUrl", type: "text" },
+      { name: "alternative", type: "text" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -74,12 +97,20 @@ export type MarkSourcesRecord = MarkSources & XataRecord;
 export type Locations = InferredTypes["locations"];
 export type LocationsRecord = Locations & XataRecord;
 
+export type Products = InferredTypes["products"];
+export type ProductsRecord = Products & XataRecord;
+
+export type Reports = InferredTypes["reports"];
+export type ReportsRecord = Reports & XataRecord;
+
 export type DatabaseSchema = {
   tags: TagsRecord;
   brands: BrandsRecord;
   brands_tags: BrandsTagsRecord;
   mark_sources: MarkSourcesRecord;
   locations: LocationsRecord;
+  products: ProductsRecord;
+  reports: ReportsRecord;
 };
 
 const DatabaseClient = buildClient();
@@ -100,6 +131,6 @@ let instance: XataClient | undefined = undefined;
 export const getXataClient = () => {
   if (instance) return instance;
 
-  instance = new XataClient({ apiKey: process.env.XATA_API_KEY });
+  instance = new XataClient();
   return instance;
 };

@@ -1,0 +1,12 @@
+{
+  "id": "mig_cs50u87tni63c332rp00",
+  "parentID": "mig_cs432hntni63c332rjeg",
+  "checksum": "1:92d8fe29d2fb33d334fa2ee72ffb76a880db461da366d5758712c5f450bc8631",
+  "operations": [
+    {
+      "addTable": {
+        "table": "products"
+      }
+    }
+  ]
+}

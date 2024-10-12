@@ -1,0 +1,12 @@
+{
+  "id": "mig_cs50vc7tni63c332rp4g",
+  "parentID": "mig_cs50uvn1uhulgm2ppqdg",
+  "checksum": "1:3592970cec7d7ab8d8696a4763a36fdffe3fa3fe7caf1e1307fc8bd08377c311",
+  "operations": [
+    {
+      "addTable": {
+        "table": "reports"
+      }
+    }
+  ]
+}
