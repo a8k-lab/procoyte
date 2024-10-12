@@ -93,7 +93,7 @@ export default async function Home({ searchParams: { q } }: HomePageProps) {
       {/* only show recommendations if the brand is marked */}
       {brand?.marked === 1 && brandRecommendations ? (
         <RecommendationsSection
-          recommendations={brandRecommendations?.recommendations}
+          recommendations={brandRecommendations?.recommendations || []}
         />
       ) : null}
     </>

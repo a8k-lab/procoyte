@@ -16,7 +16,7 @@ export default async function AdminBrandPage({
           imageUrl: brand?.imageUrl || undefined,
           name: brand?.name || undefined,
           price: brand?.price || undefined,
-          marked: brand?.marked ? (`${brand.marked}` as "0" | "1") : undefined,
+          marked: brand?.marked ? (`${brand.marked}` as "0" | "1") : "0",
           location: brand?.location
             ? {
                 value: brand?.location?.id || "",

@@ -7,7 +7,10 @@ export const adminBrandSchema = z.object({
   imageUrl: z.string().optional(),
   location: z.object({ value: z.string(), label: z.string() }).optional(),
   markReason: z.string().optional(),
-  ownedBy: z.object({ value: z.string(), label: z.string() }).optional(),
+  ownedBy: z
+    .object({ value: z.string(), label: z.string() })
+    .optional()
+    .nullable(),
   tags: z
     .array(
       z.object({

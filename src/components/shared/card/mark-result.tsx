@@ -34,10 +34,12 @@ export const MarkResultCard = (props: MarkResultCardProps) => {
       {props.isMarked ? (
         <div className="md:flex flex-col items-center">
           <div className="w-full">
-            <h2>
-              {props.name}
-              {props.owned_by ? ` is owned by ${props.owned_by.name}` : " -"}
-            </h2>
+            {props.owned_by?.name ? (
+              <h2>
+                {props.name}
+                {props.owned_by ? ` is owned by ${props.owned_by.name}` : ""}
+              </h2>
+            ) : null}
 
             <p
               className="my-5"
@@ -73,6 +75,7 @@ export const MarkResultCard = (props: MarkResultCardProps) => {
             href={props?.markedSources?.[0]?.url || "#"}
             variant="destructive"
             className="mt-6"
+            target="_blank"
           >
             <Icon icon="majesticons:open-line" className="size-6" />
             Open Proof
