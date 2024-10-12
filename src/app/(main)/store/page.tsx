@@ -79,7 +79,13 @@ async function ProductsTab() {
   return (
     <section className="grid grid-cols-2 gap-1">
       {products?.map(product => (
-        <a key={product.id} href={product.url || ""} className="group">
+        <a
+          key={product.id}
+          href={product.url || ""}
+          target="_blank"
+          className="group"
+          rel="noreferrer"
+        >
           <ProductCard
             name={product?.name ?? ""}
             imageSrc={product.imageUrl}
