@@ -24,7 +24,7 @@ export const reportSchema = z.object({
     .min(2, {
       message: "Minimal 2 karakter",
     }),
-  purpose: z.enum(["0", "1"]),
+  purpose: z.enum(["false-information", "report-brand-product"]),
   imageUrl: z.string().optional(),
   reason: z.string({ required_error: "Penjelasan Lapor harus diisi" }).min(5, {
     message: "Minimal 5 karakter",

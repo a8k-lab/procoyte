@@ -1,6 +1,11 @@
 import "server-only";
 import { db } from "@/lib/db";
-import type { BrandsRecord, MarkSourcesRecord, TagsRecord } from "@/xata";
+import type {
+  BrandsRecord,
+  MarkSourcesRecord,
+  ReportsRecord,
+  TagsRecord,
+} from "@/xata";
 import type {
   EditableData,
   Identifiable,
@@ -267,4 +272,23 @@ export async function getBrandTags({
   });
 
   return JSON.parse(JSON.stringify(tags)) as typeof tags;
+}
+
+export async function postReport({
+  name,
+  purpose,
+  imageUrl,
+  reason,
+  proofUrl,
+  alternative,
+}: Partial<Omit<ReportsRecord, "id">>) {
+  const report = await db.reports.create({
+    name,
+    purpose,
+    imageUrl,
+    reason,
+    proofUrl,
+    alternative,
+  });
+  return report;
 }
