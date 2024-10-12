@@ -37,7 +37,7 @@ export default function MarkResultSection({
   return (
     <section className="mt-8">
       <p className="mb-4 text-muted-foreground text-balance">
-        Hasil pencarian untuk "{q}"
+        Hasil pencarian paling relevan untuk "{q}"
       </p>
 
       {result.marked === 0 ? (
