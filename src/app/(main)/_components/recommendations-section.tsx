@@ -18,7 +18,7 @@ export default function RecommendationsSection({
         </Link>
       </div>
 
-      <ul className="flex overflow-x-auto gap-[18px] mt-3">
+      <ul className="flex overflow-x-auto gap-[18px] mt-3 pb-3">
         {recommendations.map(recommendation => (
           <li key={recommendation.id} className="flex-shrink-0">
             <Link href={`/brands/${recommendation.id}`}>
