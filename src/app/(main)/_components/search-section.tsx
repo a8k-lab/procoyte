@@ -11,10 +11,10 @@ export default function SearchSection() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const params = new URLSearchParams(searchParams);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams);
     params.set("q", e.currentTarget.q.value);
 
     replace(`${pathname}?${params.toString()}`);
@@ -30,6 +30,7 @@ export default function SearchSection() {
           name="q"
           placeholder="Masukkan nama, link, brand"
           className="w-full sm:w-[320px]"
+          defaultValue={params.get("q") || ""}
           minLength={3}
           required
         />
